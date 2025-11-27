@@ -5,7 +5,7 @@ const path = require('path');
 const fs = require('fs-extra');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10315;
 
 app.use(cors());
 app.use(express.json());
@@ -173,6 +173,32 @@ app.delete('/api/files/:filename', async (req, res) => {
     res.json({ message: 'File deleted successfully' });
   } catch (error) {
     res.status(500).json({ error: 'Error deleting file: ' + error.message });
+  }
+});
+
+// 清空所有文件
+app.delete('/api/files', async (req, res) => {
+  try {
+    await ensureUploadDir();
+    const files = await fs.readdir(UPLOAD_DIR);
+
+    if (files.length === 0) {
+      return res.json({ message: 'No files to delete' });
+    }
+
+    // 删除所有文件
+    const deletePromises = files.map(file =>
+      fs.remove(path.join(UPLOAD_DIR, file))
+    );
+
+    await Promise.all(deletePromises);
+
+    res.json({
+      message: `All files deleted successfully`,
+      deletedCount: files.length
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Error deleting all files: ' + error.message });
   }
 });
 

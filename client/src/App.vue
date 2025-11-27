@@ -1,114 +1,83 @@
 <template>
-  <div>
-    <header class="header">
-      <h1>文件上传系统</h1>
-      <p>支持多文件上传，最大文件大小 10MB</p>
+  <div class="app-container">
+    <!-- 头部 -->
+    <header class="app-header">
+      <div class="header-content">
+        <div class="logo-section">
+          <div class="logo-icon">📁</div>
+          <div class="logo-text">
+            <h1>文件上传系统</h1>
+            <p>支持多文件上传，最大文件大小 10MB</p>
+          </div>
+        </div>
+      </div>
     </header>
 
-    <div class="upload-section">
-      <!-- 消息提示 -->
-      <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
-      <div v-if="successMessage" class="success-message">{{ successMessage }}</div>
-
-      <!-- 文件选择和上传 -->
-      <div>
-        <input
-          id="fileInput"
-          ref="fileInput"
-          type="file"
-          multiple
-          @change="handleFileSelect"
-          accept=".jpg,.jpeg,.png,.gif,.pdf"
-          style="display: none;"
-        />
-        <button @click="$refs.fileInput.click()" class="file-input-label">选择文件</button>
-      </div>
-
-      <button
-        class="upload-btn"
-        :disabled="selectedFiles.length === 0 || isUploading"
-        @click="uploadFiles"
-      >
-        {{ isUploading ? '上传中...' : '上传文件' }}
-      </button>
-
-      <!-- 选中文件列表 -->
-      <div v-if="selectedFiles.length > 0" class="file-list">
-        <h3>已选择 {{ selectedFiles.length }} 个文件</h3>
-        <div v-for="file in selectedFiles" :key="file.id" class="file-item">
-          <div class="file-info">
-            <div :class="getFileTypeClass(file.type)" class="file-type-icon">
-              {{ getFileIcon(file.type) }}
-            </div>
-            <div class="file-details">
-              <h4>{{ file.name }}</h4>
-              <div class="file-size">{{ formatFileSize(file.size) }}</div>
-            </div>
-          </div>
-          <div class="file-status" :class="file.statusClass">
-            {{ file.statusText }}
-          </div>
-        </div>
-
-        <!-- 总体上传进度 -->
-        <div v-if="isUploading" class="progress-bar">
-          <div class="progress-fill" :style="{ width: uploadProgress + '%' }"></div>
+    <!-- 主要内容 -->
+    <main class="app-main">
+      <div class="main-content">
+        <!-- 文件操作区域 -->
+        <div class="operations-panel">
+          <FileOperations
+            :selected-files="selectedFiles"
+            :uploaded-files="uploadedFiles"
+            :is-uploading="isUploading"
+            :upload-progress="uploadProgress"
+            :is-loading-files="isLoadingFiles"
+            @file-select="handleFileSelect"
+            @upload="uploadFiles"
+            @refresh="fetchFiles"
+            @clear-all="clearAllFiles"
+            @clear-selected="clearSelectedFiles"
+            @remove-file="removeFile"
+            @download="downloadFile"
+            @delete="deleteFile"
+            @preview="previewFile"
+          />
         </div>
       </div>
-    </div>
+    </main>
 
-    <!-- 已上传文件列表 -->
-    <div class="files-section">
-      <h2>已上传文件</h2>
-      <button class="btn-refresh" @click="fetchFiles">刷新列表</button>
+    <!-- 预览组件 -->
+    <FilePreview
+      v-if="previewFileData"
+      :filename="previewFileData.filename"
+      :file-size="previewFileData.size"
+      :visible="!!previewFileData"
+      @close="closePreview"
+      @download="handlePreviewDownload"
+    />
 
-      <div v-if="uploadedFiles.length > 0" class="file-list">
-        <div v-for="file in uploadedFiles" :key="file.filename" class="file-item">
-          <div class="file-info">
-            <div :class="getFileTypeClassByExtension(file.filename)" class="file-type-icon">
-              {{ getFileIconByExtension(file.filename) }}
-            </div>
-            <div class="file-details">
-              <h4>{{ file.filename }}</h4>
-              <div class="file-size">{{ formatFileSize(file.size) }}</div>
-              <div class="file-date">
-                上传时间: {{ formatDate(file.createdAt) }}
-              </div>
-            </div>
-          </div>
-          <div class="action-buttons">
-            <button class="btn btn-download" @click="downloadFile(file.filename)">
-              下载
-            </button>
-            <button class="btn btn-delete" @click="deleteFile(file.filename)">
-              删除
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div v-else-if="!isLoadingFiles" class="empty-state">
-        <p>暂无上传的文件</p>
-      </div>
-    </div>
+    <!-- 消息提示 -->
+    <MessageToast
+      :messages="messages"
+      @remove="removeMessage"
+    />
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import FileOperations from './components/FileOperations.vue'
+import FilePreview from './components/FilePreview.vue'
+import MessageToast from './components/MessageToast.vue'
 
 export default {
-  name: 'FileUploadApp',
+  name: 'App',
+  components: {
+    FileOperations,
+    FilePreview,
+    MessageToast
+  },
   data() {
     return {
       selectedFiles: [],
       uploadedFiles: [],
       isUploading: false,
       uploadProgress: 0,
-      errorMessage: '',
-      successMessage: '',
       isLoadingFiles: false,
-      serverUrl: ''
+      previewFileData: null,
+      messages: []
     }
   },
 
@@ -118,37 +87,30 @@ export default {
 
   methods: {
     // 处理文件选择
-    handleFileSelect(event) {
-      const files = Array.from(event.target.files)
-      this.selectedFiles = files.map(file => ({
-        id: Date.now() + Math.random(),
-        file: file,
-        name: file.name,
-        size: file.size,
-        type: file.type,
-        status: 'pending',
-        statusText: '等待上传',
-        statusClass: 'status-pending'
-      }))
-
-      this.errorMessage = ''
-      this.successMessage = ''
+    handleFileSelect(newFiles) {
+      // 检查文件大小限制
+      const oversizedFiles = newFiles.filter(file => file.size > 10 * 1024 * 1024)
+      if (oversizedFiles.length > 0) {
+        this.showMessage('error', '文件过大',
+          `以下文件超过 10MB 限制: ${oversizedFiles.map(f => f.name).join(', ')}`)
+        const validFiles = newFiles.filter(file => file.size <= 10 * 1024 * 1024)
+        this.selectedFiles = [...this.selectedFiles, ...validFiles]
+        if (validFiles.length > 0) {
+          this.showMessage('info', '部分文件已添加',
+            `已添加 ${validFiles.length} 个有效文件`)
+        }
+      } else {
+        this.selectedFiles = [...this.selectedFiles, ...newFiles]
+        this.showMessage('success', '文件选择成功',
+          `已选择 ${newFiles.length} 个文件`)
+      }
     },
 
     // 上传文件
     async uploadFiles() {
       if (this.selectedFiles.length === 0) return
 
-      // 验证文件大小
-      const oversizedFiles = this.selectedFiles.filter(file => file.size > 10 * 1024 * 1024)
-      if (oversizedFiles.length > 0) {
-        this.errorMessage = `以下文件超过 10MB 限制: ${oversizedFiles.map(f => f.name).join(', ')}`
-        return
-      }
-
       this.isUploading = true
-      this.errorMessage = ''
-      this.successMessage = ''
       this.uploadProgress = 0
 
       const formData = new FormData()
@@ -170,41 +132,25 @@ export default {
           }
         })
 
-        // 更新文件状态
-        this.selectedFiles.forEach(file => {
-          file.status = 'success'
-          file.statusText = '上传成功'
-          file.statusClass = 'status-success'
-        })
+        this.showMessage('success', '上传成功',
+          `成功上传 ${response.data.files.length} 个文件`)
 
-        this.successMessage = `成功上传 ${response.data.files.length} 个文件`
+        // 清空选择的文件
         this.selectedFiles = []
 
-        // 清空文件输入
-        if (this.$refs.fileInput) {
-          this.$refs.fileInput.value = ''
-        }
-
         // 刷新文件列表
-        this.fetchFiles()
+        await this.fetchFiles()
 
       } catch (error) {
         console.error('上传失败:', error)
-
-        // 更新文件状态
-        this.selectedFiles.forEach(file => {
-          file.status = 'error'
-          file.statusText = '上传失败'
-          file.statusClass = 'status-error'
-        })
-
+        let errorMessage = '上传失败，请重试'
         if (error.response) {
-          this.errorMessage = error.response.data.error || '上传失败'
-        } else {
-          this.errorMessage = '网络错误，请检查服务器连接'
+          errorMessage = error.response.data.error || errorMessage
         }
+        this.showMessage('error', '上传失败', errorMessage)
       } finally {
         this.isUploading = false
+        this.uploadProgress = 0
       }
     },
 
@@ -216,92 +162,252 @@ export default {
         this.uploadedFiles = response.data
       } catch (error) {
         console.error('获取文件列表失败:', error)
-        this.errorMessage = '无法获取文件列表，请检查服务器连接'
+        this.showMessage('error', '获取文件列表失败', '无法连接到服务器')
       } finally {
         this.isLoadingFiles = false
       }
     },
 
     // 下载文件
-    async downloadFile(filename) {
+    async downloadFile(file) {
       try {
-        const response = await axios.get(`/api/download/${filename}`, {
+        const response = await axios.get(`/api/download/${file.filename}`, {
           responseType: 'blob'
         })
 
-        // 创建下载链接
         const url = window.URL.createObjectURL(new Blob([response.data]))
         const link = document.createElement('a')
         link.href = url
-        link.setAttribute('download', filename)
+        link.setAttribute('download', file.filename)
         document.body.appendChild(link)
         link.click()
         link.remove()
         window.URL.revokeObjectURL(url)
+
+        this.showMessage('success', '下载成功', `${file.filename}`)
       } catch (error) {
         console.error('下载失败:', error)
-        this.errorMessage = '下载失败，请重试'
+        this.showMessage('error', '下载失败', '无法下载文件')
       }
     },
 
     // 删除文件
-    async deleteFile(filename) {
-      if (!confirm(`确定要删除文件 "${filename}" 吗？`)) return
+    async deleteFile(file) {
+      if (!confirm(`确定要删除文件 "${file.filename}" 吗？`)) return
 
       try {
-        await axios.delete(`/api/files/${filename}`)
-        this.successMessage = '文件删除成功'
-        this.fetchFiles()
+        await axios.delete(`/api/files/${file.filename}`)
+        this.showMessage('success', '删除成功', `${file.filename} 已删除`)
+        await this.fetchFiles()
       } catch (error) {
         console.error('删除失败:', error)
-        this.errorMessage = '删除失败，请重试'
+        this.showMessage('error', '删除失败', '无法删除文件')
       }
     },
 
-    // 格式化文件大小
-    formatFileSize(bytes) {
-      if (bytes === 0) return '0 Bytes'
-      const k = 1024
-      const sizes = ['Bytes', 'KB', 'MB', 'GB']
-      const i = Math.floor(Math.log(bytes) / Math.log(k))
-      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
+    // 清空所有文件
+    async clearAllFiles() {
+      if (!confirm('确定要删除所有已上传的文件吗？此操作不可恢复！')) return
+
+      try {
+        const response = await axios.delete('/api/files')
+        this.showMessage('success', '清空成功',
+          `${response.data.message}（${response.data.deletedCount} 个文件）`)
+        await this.fetchFiles()
+      } catch (error) {
+        console.error('清空失败:', error)
+        let errorMessage = '无法删除所有文件'
+        if (error.response) {
+          errorMessage = error.response.data.error || errorMessage
+        }
+        this.showMessage('error', '清空失败', errorMessage)
+      }
     },
 
-    // 格式化日期
-    formatDate(dateString) {
-      const date = new Date(dateString)
-      return date.toLocaleString('zh-CN')
+    // 清空选择的文件
+    clearSelectedFiles() {
+      this.selectedFiles = []
+      this.showMessage('info', '已清空', '已清空选择的文件')
     },
 
-    // 获取文件图标
-    getFileIcon(mimeType) {
-      if (mimeType.startsWith('image/')) return '🖼️'
-      if (mimeType === 'application/pdf') return '📄'
-      return '📁'
+    // 移除单个选中文件
+    removeFile(fileId) {
+      const file = this.selectedFiles.find(f => f.id === fileId)
+      if (file) {
+        this.selectedFiles = this.selectedFiles.filter(f => f.id !== fileId)
+        this.showMessage('info', '已移除', `${file.name} 已从选择列表中移除`)
+      }
     },
 
-    // 根据扩展名获取文件图标
-    getFileIconByExtension(filename) {
-      const ext = filename.split('.').pop().toLowerCase()
-      if (['jpg', 'jpeg', 'png', 'gif'].includes(ext)) return '🖼️'
-      if (ext === 'pdf') return '📄'
-      return '📁'
+    // 预览文件
+    previewFile(file) {
+      this.previewFileData = file
     },
 
-    // 获取文件类型样式类
-    getFileTypeClass(mimeType) {
-      if (mimeType.startsWith('image/')) return 'file-type-icon image-type'
-      if (mimeType === 'application/pdf') return 'file-type-icon pdf-type'
-      return 'file-type-icon unknown-type'
+    // 关闭预览
+    closePreview() {
+      this.previewFileData = null
     },
 
-    // 根据扩展名获取文件类型样式类
-    getFileTypeClassByExtension(filename) {
-      const ext = filename.split('.').pop().toLowerCase()
-      if (['jpg', 'jpeg', 'png', 'gif'].includes(ext)) return 'file-type-icon image-type'
-      if (ext === 'pdf') return 'file-type-icon pdf-type'
-      return 'file-type-icon unknown-type'
+    // 处理预览中的下载
+    handlePreviewDownload() {
+      if (this.previewFileData) {
+        this.downloadFile(this.previewFileData)
+      }
+    },
+
+    // 显示消息
+    showMessage(type, title, details = '') {
+      const id = Date.now() + Math.random()
+      this.messages.push({
+        id,
+        type,
+        text: title,
+        details,
+        duration: 3000
+      })
+
+      // 自动移除消息
+      setTimeout(() => {
+        this.removeMessage(id)
+      }, 3000)
+    },
+
+    // 移除消息
+    removeMessage(id) {
+      const message = this.messages.find(m => m.id === id)
+      if (message) {
+        message.animation = 'slideOut 0.3s ease-out forwards'
+        setTimeout(() => {
+          this.messages = this.messages.filter(m => m.id !== id)
+        }, 300)
+      }
     }
   }
 }
 </script>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #f8f9fa;
+  color: #212529;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 头部样式 */
+.app-header {
+  background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+  color: white;
+  padding: 24px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo-icon {
+  font-size: 48px;
+}
+
+.logo-text h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  letter-spacing: -0.5px;
+}
+
+.logo-text p {
+  font-size: 14px;
+  opacity: 0.9;
+  font-weight: 400;
+}
+
+/* 主要内容 */
+.app-main {
+  flex: 1;
+  padding: 32px 0;
+}
+
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.operations-panel {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .app-header {
+    padding: 16px 0;
+  }
+
+  .header-content {
+    padding: 0 16px;
+  }
+
+  .logo-section {
+    gap: 12px;
+  }
+
+  .logo-icon {
+    font-size: 36px;
+  }
+
+  .logo-text h1 {
+    font-size: 22px;
+  }
+
+  .logo-text p {
+    font-size: 12px;
+  }
+
+  .app-main {
+    padding: 24px 0;
+  }
+
+  .main-content {
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-text h1 {
+    font-size: 20px;
+  }
+
+  .logo-text p {
+    font-size: 11px;
+  }
+}
+</style>

@@ -51,7 +51,7 @@ export default {
   },
   computed: {
     previewUrl() {
-      return `/api/download/${this.filename}`
+      return `/api/preview/${this.filename}`
     },
     fileType() {
       const ext = this.filename.split('.').pop().toLowerCase()
@@ -232,6 +232,13 @@ export default {
   cursor: pointer;
   font-size: 14px;
   transition: background 0.3s;
+  min-height: 36px;
+  line-height: 1.5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  min-width: 100px;
 }
 
 .btn-download:hover {

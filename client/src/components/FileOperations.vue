@@ -76,7 +76,7 @@
             {{ file.statusText }}
           </div>
           <button
-            class="btn btn-sm btn-remove"
+            class="btn btn-sm btn-danger btn-remove"
             @click="removeFile(file.id)"
             :disabled="isUploading"
           >
@@ -363,20 +363,36 @@ export default {
 }
 
 .btn-remove {
-  width: 24px;
-  height: 24px;
-  padding: 0;
-  border-radius: 50%;
-  background: #e53e3e;
-  color: white;
+  min-width: 40px;
   font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .btn-remove:hover:not(:disabled) {
   background: #c53030;
+}
+
+/* 确保所有按钮尺寸统一 */
+.btn,
+.btn-sm {
+  min-height: 36px;
+  line-height: 1.5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size: 14px;
+  min-width: 100px;
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 13px;
+  min-width: 80px;
 }
 
 .selected-files-section,
@@ -426,6 +442,8 @@ export default {
   border-radius: 6px;
   border: 1px solid #dee2e6;
   transition: all 0.3s;
+  position: relative;
+  min-height: 80px;
 }
 
 .file-item:hover {
@@ -519,6 +537,9 @@ export default {
 .action-buttons {
   display: flex;
   gap: 8px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  max-width: 300px;
 }
 
 .progress-container {
@@ -585,11 +606,19 @@ export default {
 @media (max-width: 768px) {
   .upload-controls {
     padding: 16px;
+    gap: 8px;
   }
 
   .btn {
     padding: 8px 16px;
     font-size: 13px;
+    min-width: 80px;
+  }
+
+  .btn-sm {
+    padding: 4px 8px;
+    font-size: 12px;
+    min-width: 60px;
   }
 
   .btn-icon {
@@ -598,6 +627,13 @@ export default {
 
   .file-item {
     padding: 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .file-item.uploaded .file-info {
+    width: 100%;
   }
 
   .file-type-icon {
@@ -607,12 +643,18 @@ export default {
   }
 
   .action-buttons {
-    flex-direction: column;
+    width: 100%;
+    max-width: none;
+    justify-content: flex-end;
   }
 
   .selected-files-section,
   .uploaded-files-section {
     padding: 16px;
+  }
+
+  .file-status {
+    align-self: flex-start;
   }
 }
 </style>

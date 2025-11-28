@@ -139,6 +139,40 @@ app.get('/api/files', async (req, res) => {
   }
 });
 
+// 预览文件
+app.get('/api/preview/:filename', async (req, res) => {
+  try {
+    const filename = req.params.filename;
+    const filePath = path.join(UPLOAD_DIR, filename);
+
+    if (!await fs.pathExists(filePath)) {
+      return res.status(404).json({ error: 'File not found' });
+    }
+
+    // 根据文件扩展名设置合适的Content-Type
+    const ext = path.extname(filename).toLowerCase();
+    let contentType = 'application/octet-stream';
+
+    if (['.jpg', '.jpeg'].includes(ext)) {
+      contentType = 'image/jpeg';
+    } else if (ext === '.png') {
+      contentType = 'image/png';
+    } else if (ext === '.gif') {
+      contentType = 'image/gif';
+    } else if (ext === '.pdf') {
+      contentType = 'application/pdf';
+    }
+
+    res.setHeader('Content-Type', contentType);
+    res.setHeader('Content-Disposition', `inline; filename="${filename}"`);
+
+    const fileStream = fs.createReadStream(filePath);
+    fileStream.pipe(res);
+  } catch (error) {
+    res.status(500).json({ error: 'Error previewing file: ' + error.message });
+  }
+});
+
 // 下载文件
 app.get('/api/download/:filename', async (req, res) => {
   try {

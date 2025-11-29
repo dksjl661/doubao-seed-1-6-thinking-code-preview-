@@ -1,0 +1,26 @@
+globalThis.__BUILD_MANIFEST = {
+  "pages": {
+    "/_app": []
+  },
+  "devFiles": [],
+  "polyfillFiles": [
+    "static/chunks/e69eb_next_dist_build_polyfills_polyfill-nomodule.js"
+  ],
+  "lowPriorityFiles": [],
+  "rootMainFiles": [
+    "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_3ca5a562._.js",
+    "static/chunks/e69eb_next_dist_compiled_react-dom_716d4760._.js",
+    "static/chunks/e69eb_next_dist_compiled_react-server-dom-turbopack_79d9567a._.js",
+    "static/chunks/e69eb_next_dist_compiled_next-devtools_index_03ccd5fa.js",
+    "static/chunks/e69eb_next_dist_compiled_47519eda._.js",
+    "static/chunks/e69eb_next_dist_client_4d9825e8._.js",
+    "static/chunks/e69eb_next_dist_51d83f09._.js",
+    "static/chunks/e69eb_@swc_helpers_cjs_48304684._.js",
+    "static/chunks/code_doubao-seed-1-6-thinking-code-preview-_airtable-clone_a0ff3932._.js",
+    "static/chunks/turbopack-code_doubao-seed-1-6-thinking-code-preview-_airtable-clone_3ea0ce84._.js"
+  ]
+};
+globalThis.__BUILD_MANIFEST.lowPriorityFiles = [
+"/static/" + process.env.__NEXT_BUILD_ID + "/_buildManifest.js",
+"/static/" + process.env.__NEXT_BUILD_ID + "/_ssgManifest.js"
+];

@@ -1,233 +1,171 @@
-# TODO List - 现代化任务管理应用
+# YouTube Clone with Next.js and Clerk
 
-一个功能完整、界面精美的现代化任务管理应用，支持任务的增删改查、状态管理和时间追踪。
+This is a YouTube homepage clone built with Next.js, TypeScript, Tailwind CSS, and Clerk authentication.
 
-## ✨ 功能特性
+## Features
 
-### 📝 核心功能
+- **YouTube Homepage Design**: Pixel-perfect clone of YouTube's homepage
+- **Google Authentication**: Sign in with Google using Clerk
+- **User Profile Menu**: View user information and manage account
+- **Video Grid**: Browse videos with thumbnails, titles, and metadata
+- **Playlist Functionality**: Save videos to watch later and like videos
+- **Mock Buttons**: All YouTube features are present with mock functionality
+- **Responsive Design**: Works on desktop, tablet, and mobile devices
 
-- **添加任务**: 快速添加新的任务
-- **编辑任务**: 随时修改任务内容
-- **删除任务**: 支持删除和永久删除
-- **完成任务**: 勾选框标记任务完成状态
+## Tech Stack
 
-### 🔍 筛选功能
+- **Next.js 15**: React framework for building the application
+- **TypeScript**: Type-safe JavaScript
+- **Tailwind CSS**: Utility-first CSS framework
+- **Clerk**: Authentication provider for Google login
+- **Lucide React**: Icon library for UI components
 
-- **全部任务**: 显示所有未删除的任务
-- **进行中**: 只显示未完成的任务
-- **已完成**: 只显示已完成的任务
-- **已删除**: 显示已删除的任务（可恢复）
+## Getting Started
 
-### ⏰ 时间追踪
+### Prerequisites
 
-- **创建时间**: 显示任务创建时间
-- **删除时间**: 显示任务删除时间
-- **智能显示**: 刚刚/分钟前/小时前/天前/完整日期
+- Node.js 18+
+- npm or yarn
 
-### 📊 数据统计
+### Installation
 
-- **总任务数**: 统计所有未删除任务
-- **已完成数**: 统计已完成任务
-- **待完成数**: 统计未完成任务
-- **已删除数**: 统计已删除任务
+1. Install dependencies:
+```bash
+npm install
+```
 
-### 💾 本地存储
+2. Set up environment variables:
+Create a `.env.local` file in the root directory and add your Clerk credentials:
 
-- 所有数据自动保存到浏览器本地存储
-- 刷新页面后数据不会丢失
-- 支持跨会话数据持久化
+```
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_publishable_key
+CLERK_SECRET_KEY=your_secret_key
+```
 
-## 🎨 设计特点
+You can get these credentials from [Clerk's dashboard](https://dashboard.clerk.com/).
 
-### 现代化 UI 设计
+### Development
 
-- **渐变背景**: 紫色渐变背景，视觉效果优雅
-- **卡片设计**: 采用现代化卡片布局
-- **圆角设计**: 柔和的圆角处理
-- **阴影效果**: 适当的阴影增强层次感
-
-### 交互体验
-
-- **平滑动画**: 所有交互都有平滑过渡
-- **悬停效果**: 按钮和卡片都有悬停状态
-- **即时反馈**: 操作后立即显示结果
-- **加载动画**: 统计数字有脉冲动画效果
-
-### 响应式设计
-
-- **桌面端**: 优化的桌面端布局
-- **平板端**: 自适应平板屏幕
-- **手机端**: 完美适配手机屏幕
-- **触摸友好**: 适合触摸操作
-
-## 🛠️ 技术栈
-
-- **HTML5**: 语义化标签，SEO 友好
-- **CSS3**: 现代化样式，CSS Grid/Flexbox 布局
-- **JavaScript ES6+**: 模块化编程，面向对象设计
-- **LocalStorage**: 本地数据存储
-- **Font Awesome**: 图标支持（通过 Unicode）
-
-## 📱 界面预览
-
-### 主界面
-
-- 渐变背景，视觉冲击力强
-- 居中布局，符合现代设计趋势
-- 清晰的视觉层次结构
-- 和谐的色彩搭配
-
-### 任务卡片
-
-- 左侧勾选框，直观操作
-- 中间任务内容和时间信息
-- 右侧操作按钮（悬停显示）
-- 不同状态不同样式（完成/删除）
-
-### 统计面板
-
-- 四个统计卡片，图标+数字+标签
-- 点击切换不同统计视图
-- 实时更新统计数据
-
-### 筛选标签
-
-- 四个筛选选项，图标+文字
-- 激活状态有明显视觉反馈
-- 支持触摸滑动
-
-## 🚀 使用方法
-
-### 直接打开
-
-1. 下载项目文件
-2. 双击 `index.html` 文件
-3. 在浏览器中打开即可使用
-
-### 本地服务器
+Run the development server:
 
 ```bash
-# 使用Python启动本地服务器
-python3 -m http.server 8000
-
-# 使用Node.js启动本地服务器
-npx serve .
-
-# 访问地址
-http://localhost:8000
+npm run dev
 ```
 
-## 📁 项目结构
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-```
-todo-list/
-├── index.html          # 主页面
-├── styles.css          # 样式文件
-├── script.js           # JavaScript逻辑
-└── README.md           # 项目文档
-```
+### Build
 
-## 🎯 核心算法
+Build the application for production:
 
-### 时间格式化
-
-```javascript
-// 根据时间差智能显示不同格式
-- 小于1分钟: "刚刚"
-- 1-60分钟: "X分钟前"
-- 1-24小时: "X小时前"
-- 1-7天: "X天前"
-- 超过7天: "YYYY-MM-DD HH:mm"
+```bash
+npm run build
 ```
 
-### 任务筛选
+### Start
 
-```javascript
-// 支持四种筛选模式
-- all: 所有未删除任务
-- active: 未完成任务
-- completed: 已完成任务
-- deleted: 已删除任务
+Start the production server:
+
+```bash
+npm start
 ```
 
-### 数据管理
+## Project Structure
 
-```javascript
-// 面向对象的数据管理
--TodoApp类封装所有功能 - 本地存储自动同步 - 事件驱动的UI更新;
+```
+youtube-clone/
+├── components/
+│   ├── Header.tsx          # Top navigation header
+│   ├── Sidebar.tsx         # Left sidebar menu
+│   ├── VideoGrid.tsx       # Video grid container
+│   └── VideoCard.tsx       # Individual video card
+├── lib/
+│   └── mockData.ts         # Mock video data
+├── pages/
+│   ├── _app.tsx            # App component with ClerkProvider
+│   ├── _document.tsx        # Document component
+│   ├── api/
+│   │   └── auth/
+│   │       └── [...clerk].ts  # Clerk authentication API
+│   └── index.tsx            # Home page
+├── styles/
+│   └── globals.css          # Global styles
+├── types/
+│   └── index.ts             # TypeScript interfaces
+├── .env.local               # Environment variables
+├── next.config.ts           # Next.js configuration
+├── tailwind.config.ts       # Tailwind CSS configuration
+├── tsconfig.json            # TypeScript configuration
+└── package.json              # Project dependencies
 ```
 
-## 🔧 自定义配置
+## Features Breakdown
 
-### 修改主题色彩
+### Authentication
+- Google sign-in using Clerk
+- User profile menu with personal information
+- Sign out functionality
 
-```css
-:root {
-  --primary-color: #6366f1; /* 主色调 */
-  --success-color: #10b981; /* 成功色 */
-  --danger-color: #ef4444; /* 危险色 */
-  /* ... 其他颜色变量 */
-}
+### Video Browsing
+- Video grid with thumbnails and metadata
+- Video titles, channel names, views, and posted dates
+- Hover effects with interactive buttons
+
+### Playlist Functionality
+- Like/unlike videos
+- Add/remove videos from watch later
+- Visual feedback for playlist actions
+
+### Mock Buttons
+All YouTube features are present with mock functionality:
+- Subscribe buttons
+- Video options menu
+- Share functionality
+- Play next feature
+- Not interested option
+
+## Customization
+
+### Adding More Videos
+Edit `lib/mockData.ts` to add more video objects:
+
+```typescript
+export const mockVideos: Video[] = [
+  {
+    id: '1',
+    title: 'Your Video Title',
+    channel: 'Channel Name',
+    channelId: 'channel123',
+    views: '1.2M',
+    posted: '2 days ago',
+    duration: '10:30',
+    thumbnail: 'https://i.ytimg.com/vi/video_id/hq720.jpg',
+    channelAvatar: 'https://yt3.googleusercontent.com/avatar.jpg',
+  },
+  // Add more videos...
+];
 ```
 
-### 修改字体大小
+### Styling
+The project uses Tailwind CSS. You can customize colors in `tailwind.config.ts`:
 
-```css
-:root {
-  --font-size-sm: 0.875rem; /* 小字体 */
-  --font-size-base: 1rem; /* 基础字体 */
-  --font-size-lg: 1.125rem; /* 大字体 */
-  --font-size-xl: 1.25rem; /* 超大字体 */
-}
+```typescript
+theme: {
+  extend: {
+    colors: {
+      'youtube-red': '#FF0000',
+      'youtube-dark': '#0F0F0F',
+      'youtube-light': '#212121',
+      'youtube-hover': '#303030',
+    },
+  },
+},
 ```
 
-### 修改动画速度
+## License
 
-```css
-:root {
-  --transition: all 0.2s ease; /* 动画过渡时间 */
-}
-```
+MIT License
 
-## 📝 更新日志
+## Contributing
 
-### v1.0.0 (2024-01-01)
-
-- ✨ 初始版本发布
-- ✨ 支持任务的增删改查
-- ✨ 支持任务完成状态管理
-- ✨ 支持任务筛选功能
-- ✨ 支持时间追踪功能
-- ✨ 支持本地数据存储
-- ✨ 响应式设计
-- ✨ 现代化 UI 界面
-
-## 🤝 贡献指南
-
-1. Fork 本仓库
-2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 开启 Pull Request
-
-## 📄 许可证
-
-本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
-
-## 🙏 致谢
-
-- [Inter Font](https://fonts.google.com/specimen/Inter) - Google Fonts 提供的优秀字体
-- [CSS Tricks](https://css-tricks.com/) - CSS 技术参考
-- [MDN Web Docs](https://developer.mozilla.org/) - Web 技术文档
-
-## 📞 联系方式
-
-如有问题或建议，请通过以下方式联系：
-
-- 提交 Issue
-- 发送邮件
-- 创建 Pull Request
-
----
-
-**享受高效的任务管理体验！** 🎉
+Contributions are welcome! Please feel free to submit a Pull Request.

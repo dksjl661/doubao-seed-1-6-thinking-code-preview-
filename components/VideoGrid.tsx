@@ -1,66 +1,46 @@
-import { useState } from 'react';
-import VideoCard from './VideoCard';
-import type { Video } from '../types';
+import VideoCard from "./VideoCard";
+import Shorts from "./Shorts";
+import AdCard from "./AdCard";
+import type { Video } from "../types";
 
 interface VideoGridProps {
   videos: Video[];
+  shorts: Video[];
 }
 
-export default function VideoGrid({ videos }: VideoGridProps) {
-  const [likedVideos, setLikedVideos] = useState<Set<string>>(new Set());
-  const [watchLaterVideos, setWatchLaterVideos] = useState<Set<string>>(new Set());
-  const [showMessage, setShowMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
-
-  const handleLike = (videoId: string) => {
-    const newLiked = new Set(likedVideos);
-    if (newLiked.has(videoId)) {
-      newLiked.delete(videoId);
-      setShowMessage({ type: 'success', text: 'Removed from liked videos' });
-    } else {
-      newLiked.add(videoId);
-      setShowMessage({ type: 'success', text: 'Added to liked videos' });
-    }
-    setLikedVideos(newLiked);
-    setTimeout(() => setShowMessage(null), 2000);
-  };
-
-  const handleWatchLater = (videoId: string) => {
-    const newWatchLater = new Set(watchLaterVideos);
-    if (newWatchLater.has(videoId)) {
-      newWatchLater.delete(videoId);
-      setShowMessage({ type: 'success', text: 'Removed from watch later' });
-    } else {
-      newWatchLater.add(videoId);
-      setShowMessage({ type: 'success', text: 'Added to watch later' });
-    }
-    setWatchLaterVideos(newWatchLater);
-    setTimeout(() => setShowMessage(null), 2000);
-  };
+export default function VideoGrid({ videos, shorts }: VideoGridProps) {
+  // Split videos: First 2 go in the top row with the Ad
+  const topRowVideos = videos.slice(0, 2);
+  const remainingVideos = videos.slice(2);
 
   return (
-    <div className="p-4">
-      {/* Success Message */}
-      {showMessage && (
-        <div className={`fixed top-20 right-4 px-4 py-2 rounded-lg shadow-lg z-50 ${
-          showMessage.type === 'success' ? 'bg-green-600' : 'bg-red-600'
-        }`}>
-          {showMessage.text}
+    <div className="p-6 pt-6 max-w-[2200px] mx-auto">
+      {/* First Row: Ad + 2 Videos */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 mb-12">
+        {/* Advertisement Card - Always First */}
+        <div className="w-full aspect-video">
+          <AdCard />
         </div>
-      )}
 
-      {/* Video Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-        {videos.map((video) => (
-          <VideoCard
-            key={video.id}
-            video={video}
-            isLiked={likedVideos.has(video.id)}
-            isInWatchLater={watchLaterVideos.has(video.id)}
-            onLike={() => handleLike(video.id)}
-            onWatchLater={() => handleWatchLater(video.id)}
-          />
+        {/* Top Row Videos */}
+        {topRowVideos.map((video) => (
+          <VideoCard key={video.id} video={video} />
         ))}
       </div>
+
+      {/* Shorts Section - Full Width Shelf */}
+      <div className="mb-12">
+        <Shorts shorts={shorts} />
+      </div>
+
+      {/* Remaining Videos Grid */}
+      {remainingVideos.length > 0 && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-8">
+          {remainingVideos.map((video) => (
+            <VideoCard key={video.id} video={video} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

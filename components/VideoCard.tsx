@@ -1,143 +1,98 @@
-import { useState } from 'react';
-import {
-  ThumbsUp,
-  ThumbsDown,
-  Share2,
-  PlayCircle,
-  MoreVertical,
-  Clock,
-  Plus
-} from 'lucide-react';
-import Image from 'next/image';
-import type { Video } from '../types';
+import Image from "next/image";
+import type { Video } from "../types";
 
 interface VideoCardProps {
   video: Video;
-  isLiked: boolean;
-  isInWatchLater: boolean;
-  onLike: () => void;
-  onWatchLater: () => void;
 }
 
-export default function VideoCard({
-  video,
-  isLiked,
-  isInWatchLater,
-  onLike,
-  onWatchLater
-}: VideoCardProps) {
-  const [showMenu, setShowMenu] = useState(false);
-
+export default function VideoCard({ video }: VideoCardProps) {
   return (
-    <div className="group cursor-pointer">
-      {/* Thumbnail */}
-      <div className="relative aspect-video bg-gray-800 rounded-xl overflow-hidden mb-3">
+    <div className="flex flex-col gap-3 cursor-pointer group">
+      {/* Thumbnail Container */}
+      <div className="relative aspect-video w-full rounded-xl overflow-hidden bg-[#2a2a2a]">
         <Image
           src={video.thumbnail}
           alt={video.title}
           fill
-          className="object-cover group-hover:scale-105 transition-transform duration-300"
+          className="object-cover"
         />
-        {/* Duration */}
-        <div className="absolute bottom-2 right-2 bg-black/90 px-2 py-1 rounded text-xs font-medium">
+
+        {/* Duration Badge */}
+        <div className="absolute bottom-1.5 right-1.5 bg-black/80 px-1.5 py-[1px] rounded text-xs font-medium text-white tracking-wide">
           {video.duration}
         </div>
-        {/* Menu Button */}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            setShowMenu(!showMenu);
-          }}
-          className="absolute top-2 right-2 p-2 rounded-full bg-black/50 hover:bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity"
-        >
-          <MoreVertical size={18} />
-        </button>
-
-        {/* Dropdown Menu */}
-        {showMenu && (
-          <div className="absolute top-10 right-2 w-48 bg-youtube-light rounded-lg shadow-xl border border-gray-700 z-10">
-            <button className="w-full flex items-center space-x-3 p-3 rounded hover:bg-youtube-hover">
-              <Plus size={20} />
-              <span>Save to playlist</span>
-            </button>
-            <button className="w-full flex items-center space-x-3 p-3 rounded hover:bg-youtube-hover">
-              <Share2 size={20} />
-              <span>Share</span>
-            </button>
-            <button className="w-full flex items-center space-x-3 p-3 rounded hover:bg-youtube-hover">
-              <PlayCircle size={20} />
-              <span>Play next</span>
-            </button>
-            <button className="w-full flex items-center space-x-3 p-3 rounded hover:bg-youtube-hover text-red-400">
-              <span>Not interested</span>
-            </button>
-          </div>
-        )}
       </div>
 
-      {/* Video Info */}
-      <div className="flex space-x-3">
-        <div className="flex-shrink-0">
-          <img
-            src={video.channelAvatar}
-            alt={video.channel}
-            className="w-10 h-10 rounded-full"
-          />
+      {/* Meta Data */}
+      <div className="flex gap-3 items-start">
+        {/* Channel Avatar */}
+        <div className="flex-shrink-0 mt-0.5">
+          <div className="w-9 h-9 rounded-full overflow-hidden bg-gray-700 relative">
+            {/* Placeholder logic for avatars based on screenshot */}
+            {video.channel === "UNSW Physics" ? (
+              <div className="w-full h-full bg-[#FFD700] flex items-center justify-center text-black font-bold text-[10px]">
+                UP
+              </div>
+            ) : video.channel === "丁太升" ? (
+              <div className="w-full h-full bg-gray-500 flex items-center justify-center text-white text-xs">
+                丁
+              </div>
+            ) : video.channelAvatar &&
+              !video.channelAvatar.includes("default") ? (
+              <img
+                src={video.channelAvatar}
+                alt={video.channel}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-purple-500 text-white text-xs">
+                {video.channel.charAt(0)}
+              </div>
+            )}
+          </div>
         </div>
-        <div className="flex-1 min-w-0">
-          <h3 className="text-sm font-semibold line-clamp-2 hover:text-blue-400">
+
+        {/* Text Info */}
+        <div className="flex flex-col">
+          <h3 className="text-[16px] font-semibold text-white line-clamp-2 leading-snug mb-1 group-hover:text-white">
             {video.title}
           </h3>
-          <p className="text-xs text-gray-400 mt-1">
-            {video.channel}
-          </p>
-          <p className="text-xs text-gray-400">
-            {video.views} views • {video.posted}
-          </p>
-        </div>
-      </div>
-
-      {/* Interaction Buttons */}
-      <div className="flex items-center justify-between mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
-        <div className="flex space-x-1">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onLike();
-            }}
-            className={`flex items-center space-x-1 px-2 py-1 rounded-full text-xs ${
-              isLiked
-                ? 'bg-blue-500/20 text-blue-400'
-                : 'hover:bg-youtube-hover text-gray-300'
-            }`}
-          >
-            <ThumbsUp size={14} />
-            <span>Like</span>
-          </button>
-          <button className="flex items-center space-x-1 px-2 py-1 rounded-full text-xs hover:bg-youtube-hover text-gray-300">
-            <ThumbsDown size={14} />
-            <span>Dislike</span>
-          </button>
+          <div className="text-sm text-[#AAAAAA] flex flex-col">
+            <div className="flex items-center hover:text-white transition-colors">
+              <span>{video.channel}</span>
+              {/* Verified Checkmark for specific channels */}
+              {(video.channel === "丁太升" ||
+                video.channel === "Web Dev Simplified") && (
+                <span className="ml-1 rounded-full bg-[#AAAAAA] w-[2px] h-[2px]"></span>
+              )}
+            </div>
+            <div className="flex items-center">
+              <span>{video.views} views</span>
+              <span className="mx-1 text-[10px]">•</span>
+              <span>{video.posted}</span>
+            </div>
+          </div>
         </div>
 
-        <div className="flex space-x-2">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onWatchLater();
-            }}
-            className={`flex items-center space-x-1 px-2 py-1 rounded-full text-xs ${
-              isInWatchLater
-                ? 'bg-blue-500/20 text-blue-400'
-                : 'hover:bg-youtube-hover text-gray-300'
-            }`}
-          >
-            <Clock size={14} />
-            <span>Watch later</span>
-          </button>
-          <button className="flex items-center space-x-1 px-2 py-1 rounded-full text-xs hover:bg-youtube-hover text-gray-300">
-            <Share2 size={14} />
-            <span>Share</span>
+        {/* Menu Dots (Hidden until hover) */}
+        <div className="ml-auto opacity-0 group-hover:opacity-100 -mt-1">
+          <button className="p-1 text-white">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="rotate-90"
+            >
+              <circle cx="12" cy="12" r="1"></circle>
+              <circle cx="12" cy="5" r="1"></circle>
+              <circle cx="12" cy="19" r="1"></circle>
+            </svg>
           </button>
         </div>
       </div>

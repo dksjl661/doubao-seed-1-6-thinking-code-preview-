@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 * {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 body {
@@ -29,4 +29,13 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #777;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }

@@ -5,16 +5,20 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'yt3.googleusercontent.com',
+        protocol: "https",
+        hostname: "yt3.googleusercontent.com",
       },
       {
-        protocol: 'https',
-        hostname: 'i.ytimg.com',
+        protocol: "https",
+        hostname: "i.ytimg.com",
       },
       {
-        protocol: 'https',
-        hostname: 'upload.wikimedia.org',
+        protocol: "https",
+        hostname: "upload.wikimedia.org",
+      },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
       },
     ],
   },

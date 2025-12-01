@@ -1,0 +1,21 @@
+{
+  "name": "temperature-converter-api",
+  "version": "1.0.0",
+  "description": "A minimal Node.js Express API for converting Fahrenheit to Celsius",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "temperature",
+    "converter",
+    "api",
+    "express"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

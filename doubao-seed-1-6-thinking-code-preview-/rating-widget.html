@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>五星级评分小部件</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .rating-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #333333;
+            font-size: 24px;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .stars {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .star {
+            font-size: 48px;
+            color: #cccccc;
+            transition: color 0.2s ease;
+            position: relative;
+        }
+
+        .star:hover,
+        .star.active,
+        .star.hover {
+            color: #ffd700;
+        }
+
+        .rating-display {
+            font-size: 18px;
+            color: #666666;
+            margin-bottom: 30px;
+            min-height: 24px;
+        }
+
+        .rating-display.selected {
+            color: #333333;
+            font-weight: 500;
+        }
+
+        .clear-button {
+            background-color: #e0e0e0;
+            color: #333333;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .clear-button:hover {
+            background-color: #d0d0d0;
+            transform: translateY(-1px);
+        }
+
+        .clear-button:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 480px) {
+            .rating-container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 20px;
+                margin-bottom: 25px;
+            }
+
+            .star {
+                font-size: 40px;
+            }
+
+            .stars {
+                gap: 12px;
+            }
+
+            .rating-display {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="rating-container">
+        <h1>请评分</h1>
+
+        <div class="stars" id="starsContainer">
+            <span class="star" data-rating="1">★</span>
+            <span class="star" data-rating="2">★</span>
+            <span class="star" data-rating="3">★</span>
+            <span class="star" data-rating="4">★</span>
+            <span class="star" data-rating="5">★</span>
+        </div>
+
+        <div class="rating-display" id="ratingDisplay">
+            请选择评分
+        </div>
+
+        <button class="clear-button" id="clearButton">
+            清除评分
+        </button>
+    </div>
+
+    <script>
+        // 获取DOM元素
+        const starsContainer = document.getElementById('starsContainer');
+        const stars = document.querySelectorAll('.star');
+        const ratingDisplay = document.getElementById('ratingDisplay');
+        const clearButton = document.getElementById('clearButton');
+
+        // 状态变量
+        let currentRating = 0;
+        let isRatingLocked = false;
+
+        // 初始化函数
+        function init() {
+            // 为每个星星添加事件监听器
+            stars.forEach(star => {
+                star.addEventListener('mouseenter', handleStarHover);
+                star.addEventListener('click', handleStarClick);
+            });
+
+            // 为星星容器添加鼠标移出事件
+            starsContainer.addEventListener('mouseleave', handleContainerMouseLeave);
+
+            // 为清除按钮添加点击事件
+            clearButton.addEventListener('click', handleClearButtonClick);
+        }
+
+        // 处理星星悬停事件
+        function handleStarHover(e) {
+            if (isRatingLocked) return;
+
+            const rating = parseInt(e.target.dataset.rating);
+            updateStars(rating, true);
+        }
+
+        // 处理星星点击事件
+        function handleStarClick(e) {
+            const rating = parseInt(e.target.dataset.rating);
+
+            if (currentRating === rating && isRatingLocked) {
+                // 如果点击的是当前已锁定的评分，再次点击则清除评分
+                clearRating();
+            } else {
+                // 设置新的评分并锁定
+                currentRating = rating;
+                isRatingLocked = true;
+                updateStars(rating, false);
+                updateDisplay(true);
+            }
+        }
+
+        // 处理容器鼠标移出事件
+        function handleContainerMouseLeave() {
+            if (isRatingLocked) {
+                // 如果已锁定评分，显示锁定的评分
+                updateStars(currentRating, false);
+            } else {
+                // 如果未锁定评分，清除所有星星的颜色
+                updateStars(0, false);
+                updateDisplay(false);
+            }
+        }
+
+        // 处理清除按钮点击事件
+        function handleClearButtonClick() {
+            clearRating();
+        }
+
+        // 清除评分
+        function clearRating() {
+            currentRating = 0;
+            isRatingLocked = false;
+            updateStars(0, false);
+            updateDisplay(false);
+        }
+
+        // 更新星星的颜色
+        function updateStars(rating, isHover) {
+            stars.forEach(star => {
+                const starRating = parseInt(star.dataset.rating);
+
+                if (starRating <= rating) {
+                    // 如果星星的评分小于等于当前评分，则填充颜色
+                    star.classList.add(isHover ? 'hover' : 'active');
+                } else {
+                    // 否则，移除填充颜色
+                    star.classList.remove('hover', 'active');
+                }
+            });
+        }
+
+        // 更新显示信息
+        function updateDisplay(isSelected) {
+            if (isSelected && currentRating > 0) {
+                ratingDisplay.textContent = `您选择了 ${currentRating} 颗星`;
+                ratingDisplay.classList.add('selected');
+            } else {
+                ratingDisplay.textContent = '请选择评分';
+                ratingDisplay.classList.remove('selected');
+            }
+        }
+
+        // 初始化评分小部件
+        init();
+    </script>
+</body>
+</html>

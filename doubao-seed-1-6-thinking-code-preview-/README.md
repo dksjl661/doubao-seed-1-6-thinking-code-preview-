@@ -1,154 +1,139 @@
-# 购物篮小计组件
+# Next.js Homepage Clone
 
-一个基于 React 的现代化购物篮管理组件，支持实时计算商品小计和总计。
+一个基于纯 HTML、CSS 和 JavaScript 复刻的 Next.js 官方网站主页。
 
-## 功能特性
+## 项目特点
 
-### 核心功能
-- ✅ 维护商品列表的本地状态管理
-- ✅ 实时修改商品数量，自动更新小计
-- ✅ 实时计算并显示购物篮总计金额
-- ✅ 提供添加新商品功能（默认添加 $10.00 的商品）
+### 🎨 视觉设计
+- **现代化界面**：采用 Next.js 官方网站的设计风格
+- **响应式布局**：完美适配桌面、平板和移动设备
+- **深色主题**：黑色背景配合白色文字，营造专业感
+- **几何装饰**：网格线和圆形元素增加视觉层次感
 
-### 边缘情况处理
-- ✅ **负数数量处理**：用户输入负数时自动重置为 1
-- ✅ **删除商品功能**：每个商品都有删除按钮
-- ✅ **货币格式化**：所有金额精确到小数点后两位，格式为 $XX.XX
+### ✨ 交互功能
+- **移动菜单**：点击汉堡图标展开/收起导航菜单
+- **搜索快捷键**：支持 Cmd/Ctrl + K 快速聚焦搜索框
+- **按钮动画**：所有按钮都有平滑的悬停效果和点击反馈
+- **视差滚动**：背景圆形元素随页面滚动产生视差效果
+- **渐入动画**：页面元素按照顺序渐入显示
+- **键盘导航**：支持键盘 Tab 键导航和 Enter/Space 键操作
 
-### 界面设计
-- ✅ 响应式设计，适配不同屏幕尺寸
-- ✅ 现代化 UI 设计，提供良好的用户体验
-- ✅ 清晰的视觉层次和空间分隔
+### 🔧 技术实现
+- **纯前端技术栈**：HTML5 + CSS3 + JavaScript ES6+
+- **无框架依赖**：不使用任何前端框架或库
+- **模块化结构**：清晰的文件结构和代码组织
+- **性能优化**：使用 CSS 变量、Flexbox/Grid 布局、Intersection Observer 等现代技术
+- **无障碍支持**：良好的语义化 HTML 结构和键盘交互支持
 
 ## 文件结构
 
 ```
 .
-├── ShoppingCart.jsx       # React 购物篮组件（模块化版本）
-├── shopping-cart-demo.html # 完整的 HTML 示例文件（包含组件）
-└── README.md               # 组件说明文档
+├── nextjs-homepage.html    # 主 HTML 文件
+├── nextjs-homepage.css     # 样式文件
+├── nextjs-homepage.js      # JavaScript 交互逻辑
+└── README.md                 # 项目说明文档
 ```
 
-## 使用方法
+## 快速开始
 
-### 方法一：直接打开 HTML 示例文件
+### 1. 克隆或下载项目文件
+将所有项目文件下载到本地目录。
 
-1. 下载 `shopping-cart-demo.html` 文件
-2. 在浏览器中直接打开该文件
-3. 即可体验完整的购物篮功能
+### 2. 启动本地服务器
+由于使用了外部 CSS 和 JavaScript 文件，建议使用本地服务器来运行项目。
 
-### 方法二：在 React 项目中使用组件
+**方法一：使用 Python**
+```bash
+# Python 3
+python3 -m http.server 3000
 
-1. 复制 `ShoppingCart.jsx` 文件到您的 React 项目中
-2. 在需要使用的地方导入组件：
-
-```jsx
-import ShoppingCart from './ShoppingCart';
+# Python 2
+python -m SimpleHTTPServer 3000
 ```
 
-3. 在 JSX 中使用组件：
+**方法二：使用 Node.js (http-server)**
+```bash
+# 安装 http-server（如果未安装）
+npm install -g http-server
 
-```jsx
-function App() {
-  return (
-    <div className="App">
-      <ShoppingCart />
-    </div>
-  );
-}
-
-export default App;
+# 启动服务器
+http-server -p 3000
 ```
 
-## 组件 API
+**方法三：使用 VS Code Live Server 扩展**
+在 VS Code 中安装 Live Server 扩展，然后右键点击 HTML 文件选择 "Open with Live Server"。
 
-### 状态管理
+### 3. 访问页面
+在浏览器中访问：http://localhost:3000/nextjs-homepage.html
 
-组件使用 React 的 `useState` Hook 管理商品列表：
+## 功能说明
 
-```jsx
-const [items, setItems] = useState([
-  { id: 1, name: '默认商品', price: 10.00, quantity: 1 }
-]);
-```
+### 导航栏
+- **Logo**：Next.js 标志，点击无实际功能（可自行添加链接）
+- **导航菜单**：包含 Showcase、Docs、Blog、Templates、Enterprise 等链接
+- **搜索框**：支持 Cmd/Ctrl + K 快捷聚焦
+- **部署按钮**：Deploy 按钮，点击无实际功能（可自行添加链接）
+- **学习按钮**：Learn 按钮，点击无实际功能（可自行添加链接）
+- **移动菜单**：汉堡图标，点击展开/收起导航菜单（仅移动端显示）
 
-### 商品对象结构
+### 安全提示横幅
+- 显示重要的安全公告
+- 包含 "Find out more" 链接
 
-```javascript
-{
-  id: Number,     // 商品唯一标识
-  name: String,    // 商品名称
-  price: Number,   // 商品单价
-  quantity: Number // 商品数量
-}
-```
-
-### 核心方法
-
-- `formatCurrency(amount)`: 货币格式化函数
-- `updateQuantity(id, newQuantity)`: 更新商品数量
-- `removeItem(id)`: 删除商品
-- `addNewItem()`: 添加新商品
-- `calculateTotal()`: 计算总计金额
+### 英雄区域
+- **主标题**："The React Framework for the Web"
+- **副标题**：描述 Next.js 的用途和优势
+- **行动按钮**：
+  - Get Started：开始使用 Next.js
+  - Learn Next.js：学习 Next.js
+- **命令提示**：显示快速开始命令 "npx create-next-app@latest"
 
 ## 浏览器兼容性
-
-组件使用 React 18 和现代 JavaScript 特性，建议在以下浏览器中使用：
 
 - Chrome 90+
 - Firefox 88+
 - Safari 14+
 - Edge 90+
 
-## 自定义配置
+## 自定义修改
 
-您可以根据需要自定义以下内容：
+### 修改颜色方案
+在 `nextjs-homepage.css` 中修改 CSS 变量：
 
-### 修改默认商品
-
-在 `ShoppingCart.jsx` 中修改初始状态：
-
-```jsx
-const [items, setItems] = useState([
-  { id: 1, name: '您的商品名称', price: 19.99, quantity: 1 }
-]);
+```css
+:root {
+    --primary-color: #fff;
+    --secondary-color: rgba(255, 255, 255, 0.8);
+    --background-color: #000;
+    /* 更多颜色变量... */
+}
 ```
 
-### 修改添加的新商品
+### 修改导航链接
+在 `nextjs-homepage.html` 中修改 `<ul class="nav-menu">` 中的链接。
 
-在 `addNewItem()` 方法中修改新商品的属性：
+### 修改按钮链接
+在 `nextjs-homepage.html` 中修改 `.hero-buttons` 中的按钮链接。
 
-```jsx
-const newItem = {
-  id: newId,
-  name: '新商品名称',
-  price: 29.99,
-  quantity: 1
-};
-```
+### 添加新功能
+在 `nextjs-homepage.js` 中添加新的 JavaScript 交互逻辑。
 
-### 自定义样式
+## 性能优化建议
 
-组件使用内联样式，您可以根据需要修改样式属性。
-
-## 示例演示
-
-您可以通过打开 `shopping-cart-demo.html` 文件来查看完整的功能演示。演示页面包含：
-
-- 购物篮组件的完整功能
-- 组件特性介绍
-- 实时功能演示
-
-## 开发和扩展
-
-如果您需要进一步开发或扩展这个组件，可以考虑以下方向：
-
-1. **数据持久化**：添加 localStorage 或其他方式保存购物车数据
-2. **商品分类**：支持商品分类和筛选功能
-3. **优惠券功能**：添加优惠券和折扣计算
-4. **API 集成**：与后端 API 集成，实现真实的商品数据获取
-5. **购物车同步**：支持多设备购物车同步功能
+1. **图片优化**：如果添加图片，建议使用 WebP 格式并进行压缩
+2. **代码分割**：对于大型项目，可以考虑将 JavaScript 代码分割成多个文件
+3. **懒加载**：对于非首屏内容，可以考虑使用懒加载
+4. **缓存策略**：在生产环境中，建议设置适当的缓存策略
 
 ## 许可证
 
 MIT License
+
+## 致谢
+
+本项目参考了 Next.js 官方网站的设计和布局。
+
+---
+
+**注意**：这是一个学习和演示项目，非 Next.js 官方网站。所有链接和功能可能需要根据实际需求进行调整。

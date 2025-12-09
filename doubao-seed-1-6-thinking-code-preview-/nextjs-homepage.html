@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next.js - The React Framework for the Web</title>
+    <link rel="stylesheet" href="nextjs-homepage.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <div class="logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <path d="M16 0L32 16L16 32L0 16L16 0Z" fill="currentColor"/>
+                    </svg>
+                    <span>Next.js</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="https://nextjs.org/showcase" target="_blank">Showcase</a></li>
+                    <li><a href="https://nextjs.org/docs" target="_blank">Docs</a></li>
+                    <li><a href="https://nextjs.org/blog" target="_blank">Blog</a></li>
+                    <li><a href="https://nextjs.org/templates" target="_blank">Templates</a></li>
+                    <li><a href="https://nextjs.org/enterprise" target="_blank">Enterprise</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <div class="search-box">
+                    <input type="text" placeholder="Search documentation...">
+                    <span class="search-hint">⌘K</span>
+                </div>
+                <button class="deploy-btn">Deploy</button>
+                <button class="learn-btn">Learn</button>
+            </div>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Security Advisory Banner -->
+    <div class="security-banner">
+        <div class="banner-container">
+            <span class="advisory-label">Important</span>
+            <span class="advisory-text">Security Advisory: CVE-2025-66478</span>
+            <a href="https://nextjs.org/security-advisories" target="_blank" class="advisory-link">Find out more →</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <main class="hero-section">
+        <div class="hero-background">
+            <div class="grid-pattern">
+                <div class="grid-line vertical"></div>
+                <div class="grid-line vertical"></div>
+                <div class="grid-line vertical"></div>
+                <div class="grid-line horizontal"></div>
+                <div class="grid-line horizontal"></div>
+                <div class="grid-line horizontal"></div>
+            </div>
+            <div class="circle-decoration circle-1"></div>
+            <div class="circle-decoration circle-2"></div>
+        </div>
+
+        <div class="hero-content">
+            <h1 class="hero-title">The React Framework for the Web</h1>
+            <p class="hero-subtitle">
+                Used by some of the world's largest companies, Next.js enables you to create
+                <span class="highlight">high-quality web applications</span> with the power of React components.
+            </p>
+            <div class="hero-buttons">
+                <a href="https://nextjs.org/docs/getting-started" target="_blank" class="btn-primary">Get Started</a>
+                <a href="https://nextjs.org/learn" target="_blank" class="btn-secondary">Learn Next.js</a>
+            </div>
+            <div class="command-prompt">
+                <span class="prompt-symbol">▶</span>
+                <span class="prompt-text">npx create-next-app@latest</span>
+            </div>
+        </div>
+    </main>
+
+    <script src="nextjs-homepage.js"></script>
+</body>
+</html>

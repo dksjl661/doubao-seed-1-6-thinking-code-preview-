@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hash #23 - dksj661 / doubao-seed-1-6-thinking-code-preview-</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <button class="menu-button" aria-label="Toggle navigation">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 16 16" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                </svg>
+            </div>
+            <div class="repo-info">
+                <a href="#" class="repo-owner">dksj661</a>
+                <span class="separator">/</span>
+                <a href="#" class="repo-name">doubao-seed-1-6-thinking-code-preview-</a>
+            </div>
+        </div>
+
+        <div class="header-right">
+            <div class="search-box">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="search-icon">
+                    <path d="M10.5 8a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M14 14l-3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                <input type="text" placeholder="Type / to search" class="search-input">
+            </div>
+
+            <div class="header-icons">
+                <button class="icon-button" aria-label="Issues">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" stroke="currentColor" stroke-width="1.5"/>
+                        <path fill-rule="evenodd" d="M8 0a8 8 0 100 16A8 8 0 008 0zM1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0z" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                </button>
+                <button class="icon-button" aria-label="Pull requests">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M7.75 2.75a.75.75 0 00-1.5 0v8.5a.75.75 0 001.5 0v-8.5zM4.25 6.25a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5z" stroke="currentColor" stroke-width="1.5"/>
+                        <path fill-rule="evenodd" d="M2 2.75A.75.75 0 012.75 2h10.5A.75.75 0 0114 2.75v10.5a.75.75 0 01-.75.75H2.75A.75.75 0 012 13.25V2.75zM3.5 4v6.75A1.75 1.75 0 005.25 12.5h5.5A1.75 1.75 0 0012.5 10.75V4h-9z" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                </button>
+                <button class="icon-button" aria-label="Actions">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M2 8a6 6 0 1110.89 3.476l4.817 4.817a.5.5 0 01-.707.707l-4.816-4.816A6 6 0 012 8z" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M5.5 8a2.5 2.5 0 105 0 2.5 2.5 0 00-5 0z" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                </button>
+                <button class="icon-button" aria-label="Projects">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M2 1.75C2 .784 2.784 0 3.75 0h8.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0114.25 16h-9.5A1.75 1.75 0 013 14.25V1.75zm1.75-.25a.25.25 0 00-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 00.25-.25V6h-2.75A1.75 1.75 0 019 4.25V1.5H3.75zm6.75 1.5v1.75c0 .138.112.25.25.25h2.55l-1.1-1.1h-1.7z" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                </button>
+                <button class="icon-button" aria-label="Wiki">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path fill-rule="evenodd" d="M0 8a8 8 0 1116 0A8 8 0 010 8zm4.5 3.5A1.5 1.5 0 013 10a.75.75 0 011.5 0c0 .83-.67 1.5-1.5 1.5zm0-3A1.5 1.5 0 013 7a.75.75 0 011.5 0c0 .83-.67 1.5-1.5 1.5zm7 3a1.5 1.5 0 01-1.5-1.5a.75.75 0 011.5 0c0 .83-.67 1.5-1.5 1.5zm0-3a1.5 1.5 0 01-1.5-1.5a.75.75 0 011.5 0c0 .83-.67 1.5-1.5 1.5z" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                </button>
+                <button class="icon-button" aria-label="Security">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M2 9a5 5 0 0110 0v3a2 2 0 01-2 2H4a2 2 0 01-2-2v-3z" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M7 10v4h2v-4H7z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        <path d="M8 4a4 4 0 110 8 4 4 0 010-8z" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                </button>
+                <button class="icon-button" aria-label="Insights">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M1.75 1.75a.75.75 0 000 1.5h12.5a.75.75 0 000-1.5H1.75zM1.75 5.75a.75.75 0 000 1.5h7.5a.75.75 0 000-1.5H1.75zM1.75 9.75a.75.75 0 000 1.5h7.5a.75.75 0 000-1.5H1.75zM11.75 9.75a.75.75 0 000 1.5h1.5a.75.75 0 000-1.5h-1.5zM11.75 13.75a.75.75 0 000 1.5h1.5a.75.75 0 000-1.5h-1.5z" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                </button>
+                <button class="icon-button" aria-label="Settings">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M11.25 2.5a.75.75 0 00-1.5 0v.09L7.61 3.73a.75.75 0 00-.56.74v2.5h-.75a.75.75 0 000 1.5h.75v2.5c0 .464.386.85.85.85h.2a.75.75 0 00.74-.56l1.14-3.14v.09a.75.75 0 001.5 0v-1.5a.75.75 0 00-.75-.75h-1.5zM3.75 12a.75.75 0 000 1.5h.09l1.14-3.14a.75.75 0 00-.56-.74v-2.5h-.75a.75.75 0 000 1.5h.75v2.5c0 .464.386.85.85.85h.2a.75.75 0 00.74-.56l1.14-3.14v.09a.75.75 0 001.5 0v-1.5a.75.75 0 00-.75-.75h-1.5zM4 6a1 1 0 11-2 0 1 1 0 012 0z" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="user-menu">
+                <img src="https://avatars.githubusercontent.com/u/123456?v=4" alt="User avatar" class="user-avatar">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="chevron-down">
+                    <path d="M4.5 6.5L8 10L11.5 6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+
+            <button class="plus-button" aria-label="Create new">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+        <div class="nav-container">
+            <a href="#" class="nav-tab">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H4zm0 2h8v8H4V4z" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+                <span>Code</span>
+            </a>
+            <a href="#" class="nav-tab">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" stroke="currentColor" stroke-width="1.5"/>
+                    <path fill-rule="evenodd" d="M8 0a8 8 0 100 16A8 8 0 008 0zM1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0z" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+                <span>Issues</span>
+                <span class="badge">0</span>
+            </a>
+            <a href="#" class="nav-tab active">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M7.75 2.75a.75.75 0 00-1.5 0v8.5a.75.75 0 001.5 0v-8.5zM4.25 6.25a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5z" stroke="currentColor" stroke-width="1.5"/>
+                    <path fill-rule="evenodd" d="M2 2.75A.75.75 0 012.75 2h10.5A.75.75 0 0114 2.75v10.5a.75.75 0 01-.75.75H2.75A.75.75 0 012 13.25V2.75zM3.5 4v6.75A1.75 1.75 0 005.25 12.5h5.5A1.75 1.75 0 0012.5 10.75V4h-9z" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+                <span>Pull requests</span>
+            </a>
+            <a href="#" class="nav-tab">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M2 8a6 6 0 1110.89 3.476l4.817 4.817a.5.5 0 01-.707.707l-4.816-4.816A6 6 0 012 8z" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M5.5 8a2.5 2.5 0 105 0 2.5 2.5 0 00-5 0z" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+                <span>Actions</span>
+            </a>
+            <a href="#" class="nav-tab">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M2 1.75C2 .784 2.784 0 3.75 0h8.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0114.25 16h-9.5A1.75 1.75 0 013 14.25V1.75zm1.75-.25a.25.25 0 00-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 00.25-.25V6h-2.75A1.75 1.75 0 019 4.25V1.5H3.75zm6.75 1.5v1.75c0 .138.112.25.25.25h2.55l-1.1-1.1h-1.7z" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+                <span>Projects</span>
+            </a>
+            <a href="#" class="nav-tab">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path fill-rule="evenodd" d="M0 8a8 8 0 1116 0A8 8 0 010 8zm4.5 3.5A1.5 1.5 0 013 10a.75.75 0 011.5 0c0 .83-.67 1.5-1.5 1.5zm0-3A1.5 1.5 0 013 7a.75.75 0 011.5 0c0 .83-.67 1.5-1.5 1.5zm7 3a1.5 1.5 0 01-1.5-1.5a.75.75 0 011.5 0c0 .83-.67 1.5-1.5 1.5zm0-3a1.5 1.5 0 01-1.5-1.5a.75.75 0 011.5 0c0 .83-.67 1.5-1.5 1.5z" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+                <span>Wiki</span>
+            </a>
+            <a href="#" class="nav-tab">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M2 9a5 5 0 0110 0v3a2 2 0 01-2 2H4a2 2 0 01-2-2v-3z" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M7 10v4h2v-4H7z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M8 4a4 4 0 110 8 4 4 0 010-8z" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+                <span>Security</span>
+            </a>
+            <a href="#" class="nav-tab">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M1.75 1.75a.75.75 0 000 1.5h12.5a.75.75 0 000-1.5H1.75zM1.75 5.75a.75.75 0 000 1.5h7.5a.75.75 0 000-1.5H1.75zM1.75 9.75a.75.75 0 000 1.5h7.5a.75.75 0 000-1.5H1.75zM11.75 9.75a.75.75 0 000 1.5h1.5a.75.75 0 000-1.5h-1.5zM11.75 13.75a.75.75 0 000 1.5h1.5a.75.75 0 000-1.5h-1.5z" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+                <span>Insights</span>
+            </a>
+            <a href="#" class="nav-tab">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M11.25 2.5a.75.75 0 00-1.5 0v.09L7.61 3.73a.75.75 0 00-.56.74v2.5h-.75a.75.75 0 000 1.5h.75v2.5c0 .464.386.85.85.85h.2a.75.75 0 00.74-.56l1.14-3.14v.09a.75.75 0 001.5 0v-1.5a.75.75 0 00-.75-.75h-1.5zM3.75 12a.75.75 0 000 1.5h.09l1.14-3.14a.75.75 0 00-.56-.74v-2.5h-.75a.75.75 0 000 1.5h.75v2.5c0 .464.386.85.85.85h.2a.75.75 0 00.74-.56l1.14-3.14v.09a.75.75 0 001.5 0v-1.5a.75.75 0 00-.75-.75h-1.5zM4 6a1 1 0 11-2 0 1 1 0 012 0z" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+                <span>Settings</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="pr-header">
+            <div class="pr-title-section">
+                <h1 class="pr-title">Hash #23</h1>
+
+                <div class="pr-meta">
+                    <span class="merged-badge">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M7 10.5L5.5 9L4 10.5M12 4v8a2 2 0 01-2 2H6a2 2 0 01-2-2V4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Merged
+                    </span>
+
+                    <span class="author-info">
+                        <img src="https://avatars.githubusercontent.com/u/123456?v=4" alt="dksj661" class="author-avatar">
+                        <a href="#" class="author-name">dksj661</a>
+                        merged 2 commits into
+                        <a href="#" class="branch-name">main</a>
+                        from
+                        <a href="#" class="branch-name">hash</a>
+                        <span class="time-ago">1 hour ago</span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="pr-actions">
+                <span class="try-new-experience">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                        <path d="M8 0a1 1 0 00-.707.293l-4 4a1 1 0 001.414 1.414L7 2.414V12a1 1 0 00.293.707l4 4a1 1 0 001.414-1.414l-4-4A1 1 0 009 12V2.414l3.293 3.293a1 1 0 101.414-1.414l-4-4A1 1 0 008 0z" fill="currentColor"/>
+                    </svg>
+                    Try the new experience
+                </span>
+                <button class="edit-button">Edit</button>
+                <div class="code-dropdown">
+                    <span>Code</span>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M4.5 6.5L8 10L11.5 6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- PR Tabs -->
+        <div class="pr-tabs">
+            <button class="pr-tab">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M2 2h12v2H2V2zm0 3h12v2H2V5zm0 3h12v2H2V8zm0 3h6v2H2v-2z" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+                <span>Conversation</span>
+                <span class="tab-count">0</span>
+            </button>
+            <button class="pr-tab active">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M1.5 2.5A1.5 1.5 0 013 1h10a1.5 1.5 0 011.5 1.5v10a1.5 1.5 0 01-1.5 1.5H7.625L5.125 15h8.375A2.5 2.5 0 0016 12.5v-10A2.5 2.5 0 0013.5 0h-10A2.5 2.5 0 001 2.5v5.375l2.5 1.5V2.5z" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M5 3a1 1 0 11-2 0 1 1 0 012 0z" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M1 8.5l2.5 1.5v3l-2.5-1.5v-3z" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+                <span>Commits</span>
+                <span class="tab-count">2</span>
+            </button>
+            <button class="pr-tab">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M2 2h12v2H2V2zm0 3h12v2H2V5zm0 3h12v2H2V8zm0 3h6v2H2v-2z" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+                <span>Checks</span>
+                <span class="tab-count">0</span>
+            </button>
+            <button class="pr-tab">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H4zm0 2h8v8H4V4z" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+                <span>Files changed</span>
+                <span class="tab-count">1,284</span>
+            </button>
+        </div>
+
+        <!-- Change Stats -->
+        <div class="change-stats">
+            <div class="stat-item added">
+                <span class="stat-number">+104,640</span>
+            </div>
+            <div class="stat-item removed">
+                <span class="stat-number">-38</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill added" style="width: 100%"></div>
+                <div class="progress-fill removed" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- File Changes Section -->
+        <div class="file-changes-section">
+            <div class="file-filters">
+                <div class="filter-group">
+                    <button class="filter-button active">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M1.75 1.75a.75.75 0 000 1.5h12.5a.75.75 0 000-1.5H1.75zM1.75 5.75a.75.75 0 000 1.5h7.5a.75.75 0 000-1.5H1.75zM1.75 9.75a.75.75 0 000 1.5h7.5a.75.75 0 000-1.5H1.75zM11.75 9.75a.75.75 0 000 1.5h1.5a.75.75 0 000-1.5h-1.5zM11.75 13.75a.75.75 0 000 1.5h1.5a.75.75 0 000-1.5h-1.5z" stroke="currentColor" stroke-width="1.5"/>
+                        </svg>
+                        <span>Changes from 1 commit</span>
+                    </button>
+                    <button class="filter-button">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M2 2h12v2H2V2zm0 3h12v2H2V5zm0 3h12v2H2V8zm0 3h6v2H2v-2z" stroke="currentColor" stroke-width="1.5"/>
+                        </svg>
+                        <span>File filter</span>
+                    </button>
+                    <button class="filter-button">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M2 2h12v2H2V2zm0 3h12v2H2V5zm0 3h12v2H2V8zm0 3h6v2H2v-2z" stroke="currentColor" stroke-width="1.5"/>
+                        </svg>
+                        <span>Conversations</span>
+                    </button>
+                    <button class="filter-button">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="pr-actions-right">
+                    <div class="ask-copilot">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" stroke="currentColor" stroke-width="1.5"/>
+                            <path fill-rule="evenodd" d="M8 0a8 8 0 100 16A8 8 0 008 0zM1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0z" stroke="currentColor" stroke-width="1.5"/>
+                        </svg>
+                        <span>Ask Copilot</span>
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M4.5 6.5L8 10L11.5 6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <button class="review-button">Review in codespace</button>
+                    <button class="review-changes-button">
+                        <span>Review changes</span>
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M4.5 6.5L8 10L11.5 6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- File List -->
+            <div class="file-list">
+                <div class="file-search">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M10.5 8a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M14 14l-3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    <input type="text" placeholder="Filter changed files" class="file-search-input">
+                </div>
+
+                <!-- File Tree -->
+                <div class="file-tree">
+                    <div class="tree-item folder expanded">
+                        <button class="tree-toggle">
+                            <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+                                <path d="M4 6h8M6 4l-2 2h10z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" class="folder-icon">
+                            <path d="M2 2h7v2H4l-2 2v8a2 2 0 002 2h8a2 2 0 002-2V6a2 2 0 00-2-2H4l-2 2z" stroke="currentColor" stroke-width="1.5"/>
+                        </svg>
+                        <span class="tree-label">doubao-seed-1-6-thinking-code-preview-</span>
+                    </div>
+
+                    <div class="tree-children">
+                        <div class="tree-item file added">
+                            <span class="tree-toggle"></span>
+                            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" class="file-icon">
+                                <path d="M4 2a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H4zm0 2h8v8H4V4z" stroke="currentColor" stroke-width="1.5"/>
+                            </svg>
+                            <span class="tree-label">a.out</span>
+                            <span class="file-status added">+</span>
+                        </div>
+
+                        <div class="tree-item file added">
+                            <span class="tree-toggle"></span>
+                            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" class="file-icon">
+                                <path d="M4 2a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H4zm0 2h8v8H4V4z" stroke="currentColor" stroke-width="1.5"/>
+                            </svg>
+                            <span class="tree-label">hash_table_tutorial</span>
+                            <span class="file-status added">+</span>
+                        </div>
+
+                        <div class="tree-item file added">
+                            <span class="tree-toggle"></span>
+                            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" class="file-icon">
+                                <path d="M4 2a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H4zm0 2h8v8H4V4z" stroke="currentColor" stroke-width="1.5"/>
+                            </svg>
+                            <span class="tree-label">hash_table_tutorial.c</span>
+                            <span class="file-status added">+</span>
+                        </div>
+
+                        <div class="tree-item folder expanded">
+                            <button class="tree-toggle">
+                                <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+                                    <path d="M4 6h8M6 4l-2 2h10z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" class="folder-icon">
+                                <path d="M2 2h7v2H4l-2 2v8a2 2 0 002 2h8a2 2 0 002-2V6a2 2 0 00-2-2H4l-2 2z" stroke="currentColor" stroke-width="1.5"/>
+                            </svg>
+                            <span class="tree-label">node_modules/.cache/default-development/</span>
+                        </div>
+
+                        <div class="tree-children">
+                            <div class="tree-item file modified">
+                                <span class="tree-toggle"></span>
+                                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" class="file-icon">
+                                    <path d="M4 2a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H4zm0 2h8v8H4V4z" stroke="currentColor" stroke-width="1.5"/>
+                                </svg>
+                                <span class="tree-label">3.pack</span>
+                                <span class="file-status modified">~</span>
+                            </div>
+
+                            <div class="tree-item file modified">
+                                <span class="tree-toggle"></span>
+                                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" class="file-icon">
+                                    <path d="M4 2a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H4zm0 2h8v8H4V4z" stroke="currentColor" stroke-width="1.5"/>
+                                </svg>
+                                <span class="tree-label">4.pack</span>
+                                <span class="file-status modified">~</span>
+                            </div>
+
+                            <div class="tree-item file modified">
+                                <span class="tree-toggle"></span>
+                                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" class="file-icon">
+                                    <path d="M4 2a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H4zm0 2h8v8H4V4z" stroke="currentColor" stroke-width="1.5"/>
+                                </svg>
+                                <span class="tree-label">5.pack</span>
+                                <span class="file-status modified">~</span>
+                            </div>
+
+                            <div class="tree-item file modified">
+                                <span class="tree-toggle"></span>
+                                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" class="file-icon">
+                                    <path d="M4 2a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H4zm0 2h8v8H4V4z" stroke="currentColor" stroke-width="1.5"/>
+                                </svg>
+                                <span class="tree-label">index.pack</span>
+                                <span class="file-status modified">~</span>
+                            </div>
+
+                            <div class="tree-item file modified">
+                                <span class="tree-toggle"></span>
+                                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" class="file-icon">
+                                    <path d="M4 2a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H4zm0 2h8v8H4V4z" stroke="currentColor" stroke-width="1.5"/>
+                                </svg>
+                                <span class="tree-label">index.pack.old</span>
+                                <span class="file-status modified">~</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Commit Details -->
+                <div class="commit-details">
+                    <div class="commit-header">
+                        <button class="prev-next-button">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M11 13l-4-4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span>Prev</span>
+                        </button>
+                        <button class="prev-next-button">
+                            <span>Next</span>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M5 13l4-4-4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="commit-info">
+                        <div class="commit-title">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M1.5 2.5A1.5 1.5 0 013 1h10a1.5 1.5 0 011.5 1.5v10a1.5 1.5 0 01-1.5 1.5H7.625L5.125 15h8.375A2.5 2.5 0 0016 12.5v-10A2.5 2.5 0 0013.5 0h-10A2.5 2.5 0 001 2.5v5.375l2.5 1.5V2.5z" stroke="currentColor" stroke-width="1.5"/>
+                                <path d="M5 3a1 1 0 11-2 0 1 1 0 012 0z" stroke="currentColor" stroke-width="1.5"/>
+                                <path d="M1 8.5l2.5 1.5v3l-2.5-1.5v-3z" stroke="currentColor" stroke-width="1.5"/>
+                            </svg>
+                            <span>main (#23)</span>
+                        </div>
+
+                        <div class="commit-meta">
+                            <div class="author-info-inline">
+                                <img src="https://avatars.githubusercontent.com/u/123456?v=4" alt="dksj661" class="author-avatar-inline">
+                                <span class="commit-author">dksj661 committed 1 hour ago</span>
+                            </div>
+                            <span class="commit-hash">commit 9344fb41a580c2c6eb6bfr85115995efdd3c0f</span>
+                        </div>
+                    </div>
+
+                    <!-- File Diffs -->
+                    <div class="file-diffs">
+                        <!-- Binary File -->
+                        <div class="file-diff">
+                            <div class="file-header">
+                                <div class="file-info">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="file-type-icon">
+                                        <path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H4zm0 2h8v8H4V4z" stroke="currentColor" stroke-width="1.5"/>
+                                    </svg>
+                                    <span class="file-path">BIN +33.6 KB doubao-seed-1-6-thinking-code-preview-/a.out</span>
+                                    <button class="copy-path-button" aria-label="Copy path">
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                            <path d="M5 2a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H5z" stroke="currentColor" stroke-width="1.5"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="file-actions">
+                                    <button class="file-action-button" aria-label="View">
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                            <path d="M8 2a6 6 0 100 12A6 6 0 008 2zm0 1a5 5 0 110 10A5 5 0 018 3zm0 2a3 3 0 100 6 3 3 0 000-6z" stroke="currentColor" stroke-width="1.5"/>
+                                        </svg>
+                                    </button>
+                                    <button class="file-action-button" aria-label="More">
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                            <circle cx="8" cy="3" r="1" fill="currentColor"/>
+                                            <circle cx="8" cy="8" r="1" fill="currentColor"/>
+                                            <circle cx="8" cy="13" r="1" fill="currentColor"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="file-content">
+                                <div class="binary-file-notice">Binary file not shown.</div>
+                            </div>
+                        </div>
+
+                        <!-- Binary File 2 -->
+                        <div class="file-diff">
+                            <div class="file-header">
+                                <div class="file-info">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="file-type-icon">
+                                        <path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H4zm0 2h8v8H4V4z" stroke="currentColor" stroke-width="1.5"/>
+                                    </svg>
+                                    <span class="file-path">BIN +33.6 KB doubao-seed-1-6-thinking-code-preview-/hash_table_tutorial</span>
+                                    <button class="copy-path-button" aria-label="Copy path">
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                            <path d="M5 2a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H5z" stroke="currentColor" stroke-width="1.5"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="file-actions">
+                                    <button class="file-action-button" aria-label="View">
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                            <path d="M8 2a6 6 0 100 12A6 6 0 008 2zm0 1a5 5 0 110 10A5 5 0 018 3zm0 2a3 3 0 100 6 3 3 0 000-6z" stroke="currentColor" stroke-width="1.5"/>
+                                        </svg>
+                                    </button>
+                                    <button class="file-action-button" aria-label="More">
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                            <circle cx="8" cy="3" r="1" fill="currentColor"/>
+                                            <circle cx="8" cy="8" r="1" fill="currentColor"/>
+                                            <circle cx="8" cy="13" r="1" fill="currentColor"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="file-content">
+                                <div class="binary-file-notice">Binary file not shown.</div>
+                            </div>
+                        </div>
+
+                        <!-- Large File with Load Diff -->
+                        <div class="file-diff">
+                            <div class="file-header">
+                                <div class="file-info">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="file-type-icon">
+                                        <path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H4zm0 2h8v8H4V4z" stroke="currentColor" stroke-width="1.5"/>
+                                    </svg>
+                                    <span class="file-path">584 doubao-seed-1-6-thinking-code-preview-/hash_table_tutorial.c</span>
+                                    <button class="copy-path-button" aria-label="Copy path">
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                            <path d="M5 2a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H5z" stroke="currentColor" stroke-width="1.5"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="file-actions">
+                                    <button class="file-action-button" aria-label="View">
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                            <path d="M8 2a6 6 0 100 12A6 6 0 008 2zm0 1a5 5 0 110 10A5 5 0 018 3zm0 2a3 3 0 100 6 3 3 0 000-6z" stroke="currentColor" stroke-width="1.5"/>
+                                        </svg>
+                                    </button>
+                                    <button class="file-action-button" aria-label="More">
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                            <circle cx="8" cy="3" r="1" fill="currentColor"/>
+                                            <circle cx="8" cy="8" r="1" fill="currentColor"/>
+                                            <circle cx="8" cy="13" r="1" fill="currentColor"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="file-content">
+                                <div class="load-diff-container">
+                                    <div class="load-diff-placeholder"></div>
+                                    <button class="load-diff-button">Load diff</button>
+                                    <div class="load-diff-notice">Large diffs are not rendered by default.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modified Binary File -->
+                        <div class="file-diff">
+                            <div class="file-header">
+                                <div class="file-info">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="file-type-icon">
+                                        <path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H4zm0 2h8v8H4V4z" stroke="currentColor" stroke-width="1.5"/>
+                                    </svg>
+                                    <span class="file-path">BIN -33.2 MB (0.79%) doubao-seed-1-6-thinking-code-preview-/node_modules/.cache/default-development/3.pack</span>
+                                    <button class="copy-path-button" aria-label="Copy path">
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                            <path d="M5 2a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H5z" stroke="currentColor" stroke-width="1.5"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="file-actions">
+                                    <button class="file-action-button" aria-label="View">
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                            <path d="M8 2a6 6 0 100 12A6 6 0 008 2zm0 1a5 5 0 110 10A5 5 0 018 3zm0 2a3 3 0 100 6 3 3 0 000-6z" stroke="currentColor" stroke-width="1.5"/>
+                                        </svg>
+                                    </button>
+                                    <button class="file-action-button" aria-label="More">
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                            <circle cx="8" cy="3" r="1" fill="currentColor"/>
+                                            <circle cx="8" cy="8" r="1" fill="currentColor"/>
+                                            <circle cx="8" cy="13" r="1" fill="currentColor"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="file-content">
+                                <div class="binary-file-notice">Binary file not shown.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="scripts/main.js"></script>
+</body>
+</html>

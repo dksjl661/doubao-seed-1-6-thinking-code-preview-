@@ -1,113 +1,80 @@
-# React Tetris
+# 最小化 Agent 实现
 
-A pure React implementation of the classic Tetris game.
+这是一个用 Python 编写的最小化 Agent 实现示例，展示了人工智能系统的核心概念：感知-思考-行动循环。
 
-## Features
+## 什么是 Agent？
 
-- 🎮 Classic Tetris gameplay
-- 🎨 Colorful tetrominoes with traditional colors
-- ⌨️ Full keyboard controls
-- 📊 Score, level, and lines tracking
-- 🔄 Next tetromino preview
-- ⏸️ Pause/Resume functionality
-- 🎯 Hard drop with score bonus
-- 🚀 Progressive difficulty with faster falling speeds
+Agent 是能够：
+1. **感知**(Perceive)环境信息的实体
+2. **思考**(Think)分析这些信息并做出决策
+3. **行动**(Act)以影响环境
 
-## Controls
+## 项目结构
 
-- **←/→** - Move tetromino left/right
-- **↑** - Rotate tetromino
-- **↓** - Soft drop (increase fall speed)
-- **Space** - Hard drop (instant drop) / Pause/Resume
+```
+.
+├── minimal_agent.py    # 主要 Agent 实现
+├── test_agent.py       # 测试脚本
+└── README.md           # 项目说明
+```
 
-## Installation
+## 核心类
 
+### 1. MinimalAgent 类 (/Users/zifeizhou/code/doubao-seed-1-6-thinking-code-preview-/minimal_agent.py:13)
+主要的智能体类，实现了完整的感知-思考-行动循环。
+
+**关键方法：**
+- `__init__`: 初始化 Agent 实例
+- `perceive()`: 获取环境信息
+- `think(perception)`: 分析信息并决策
+- `act(action)`: 执行行动
+- `run()`: 启动主循环
+
+### 2. SimpleEnvironment 类 (/Users/zifeizhou/code/doubao-seed-1-6-thinking-code-preview-/minimal_agent.py:90)
+简单的环境模拟器，用于演示 Agent 与其交互。
+
+**关键方法：**
+- `get_state()`: 获取当前环境状态
+- `receive_action(agent_name, action)`: 接收并处理 Agent 的行动
+
+## 使用方法
+
+### 1. 基本运行
 ```bash
-npm install
+python3 minimal_agent.py
 ```
 
-## Running the Game
-
+### 2. 运行测试
 ```bash
-npm start
+python3 test_agent.py
 ```
 
-The game will open in your default browser at `http://localhost:3000` (or the next available port if 3000 is in use).
+## 扩展和自定义
 
-## Building for Production
+你可以根据需要扩展这个最小化 Agent：
 
-```bash
-npm run build
-```
+1. **复杂的思考逻辑**：
+   - 添加机器学习模型
+   - 实现更复杂的规则引擎
+   - 加入计划和规划能力
 
-This will create an optimized production build in the `build` directory.
+2. **真实环境交互**：
+   - 连接到物理传感器
+   - 集成 API 调用
+   - 与外部系统通信
 
-## How to Play
+3. **多 Agent 系统**：
+   - 创建多个 Agent 实例
+   - 实现 Agent 间的通信
+   - 研究群体智能
 
-1. Press **Start** to begin the game
-2. Use the arrow keys to move and rotate the falling tetromino
-3. Press **Space** to instantly drop the tetromino
-4. Complete lines by filling them with tetromino blocks
-5. Each completed line awards points and increases your line count
-6. Every 10 lines, you advance to the next level with faster falling speeds
-7. The game ends when tetrominoes stack up to the top of the playfield
+## 示例扩展
 
-## Scoring
+尝试修改 `MinimalAgent.think()` 方法来添加新的规则或行为模式，例如：
+- 添加湿度控制
+- 实现节能模式
+- 添加用户偏好学习
 
-- **Single line**: 100 × level
-- **Double lines**: 200 × level
-- **Triple lines**: 300 × level
-- **Tetris (4 lines)**: 400 × level
-- **Hard drop**: 2 points per cell dropped
+## 总结
 
-## Technologies Used
-
-- **React 18** - UI framework
-- **React Hooks** - State management and side effects
-- **SVG** - Rendering the game board and tetrominoes
-- **JavaScript ES6+** - Modern JavaScript features
-
-## Project Structure
-
-```
-react-tetris/
-├── public/
-│   └── index.html          # HTML template
-├── src/
-│   ├── Tetris.jsx          # Main Tetris component
-│   └── index.js             # React entry point
-├── package.json              # Project dependencies
-└── README.md                 # This file
-```
-
-## Game Mechanics
-
-### Tetrominoes
-
-The game includes all 7 classic tetromino shapes:
-
-- **I** - Straight line (4 blocks)
-- **O** - Square (4 blocks)
-- **T** - T-shape (4 blocks)
-- **S** - S-shape (4 blocks)
-- **Z** - Z-shape (4 blocks)
-- **J** - J-shape (4 blocks)
-- **L** - L-shape (4 blocks)
-
-### Rotation System
-
-The game uses a simple rotation system where each tetromino can rotate into 4 different positions (except the O-shape which only has 1 position).
-
-### Collision Detection
-
-The game checks for collisions with the walls, floor, and other tetrominoes to prevent illegal moves.
-
-### Line Clearing
-
-When a horizontal line is completely filled with blocks, it is cleared from the playfield. Any blocks above the cleared line fall down to fill the space.
-
-## License
-
-MIT License - feel free to use this project for learning or as a starting point for your own Tetris implementation.
-
-## Enjoy the Game! 🎮
+这个最小化 Agent 实现展示了智能系统的核心架构。虽然简单，但它提供了一个清晰的起点，可以扩展为更复杂的人工智能系统。

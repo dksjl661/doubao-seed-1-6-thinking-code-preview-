@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微信界面</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            color: #333;
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* 黑夜模式 */
+        body.night-mode {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #e8e8e8;
+        }
+
+        /* 左侧边栏 */
+        .sidebar {
+            width: 375px;
+            background: linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%);
+            border-right: 1px solid #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        body.night-mode .sidebar {
+            background: linear-gradient(180deg, #2f2f2f 0%, #252525 100%);
+            border-right: 1px solid #3a3a3a;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar-header {
+            padding: 16px 20px;
+            background: linear-gradient(180deg, #f8f8f8 0%, #f0f0f0 100%);
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        body.night-mode .sidebar-header {
+            background: linear-gradient(180deg, #333333 0%, #2a2a2a 100%);
+            border-bottom: 1px solid #3a3a3a;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-box {
+            flex: 1;
+            padding: 10px 16px;
+            background: linear-gradient(135deg, #2a2a2a 0%, #1f1f1f 100%);
+            border-radius: 20px;
+            border: 1px solid #3a3a3a;
+            color: #e8e8e8;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #07c160;
+            box-shadow: 0 0 0 2px rgba(7, 193, 96, 0.2);
+            background: linear-gradient(135deg, #303030 0%, #252525 100%);
+        }
+
+        .search-box::placeholder {
+            color: #888;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-actions span {
+            font-size: 22px;
+            cursor: pointer;
+            color: #e0e0e0;
+            transition: color 0.2s;
+        }
+
+        .header-actions span:hover {
+            color: #07c160;
+        }
+
+        /* 联系人列表 */
+        .contact-list {
+            flex: 1;
+            overflow-y: auto;
+            background: linear-gradient(180deg, #2f2f2f 0%, #252525 100%);
+        }
+
+        .contact-item {
+            display: flex;
+            padding: 20px 24px;
+            border-bottom: 1px solid #353535;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            gap: 20px;
+            position: relative;
+        }
+
+        .contact-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 0;
+            background: linear-gradient(90deg, rgba(7, 193, 96, 0.1) 0%, transparent 100%);
+            transition: width 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: linear-gradient(135deg, #3a3a3a 0%, #2f2f2f 100%);
+            padding-left: 28px;
+            transform: translateX(4px);
+        }
+
+        .contact-item:hover::before {
+            width: 4px;
+        }
+
+        .contact-item.active {
+            background: linear-gradient(135deg, #404040 0%, #353535 100%);
+            border-left: 3px solid #07c160;
+            box-shadow: inset 0 0 10px rgba(7, 193, 96, 0.1);
+        }
+
+        .contact-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 8px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .contact-name {
+            font-weight: 500;
+            margin-bottom: 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 15px;
+        }
+
+        .contact-preview {
+            font-size: 13px;
+            color: #888;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .contact-time {
+            font-size: 12px;
+            color: #888;
+            margin-left: 8px;
+        }
+
+        .contact-badge {
+            background-color: #ff4d4f;
+            color: white;
+            border-radius: 12px;
+            padding: 4px 10px;
+            font-size: 12px;
+            margin-left: 8px;
+            font-weight: 500;
+        }
+
+        /* 主聊天区域 */
+        .chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(180deg, #1a1a1a 0%, #252525 100%);
+        }
+
+        .chat-header {
+            padding: 16px 20px;
+            background: linear-gradient(180deg, #333333 0%, #2a2a2a 100%);
+            border-bottom: 1px solid #3a3a3a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .chat-title {
+            font-weight: 600;
+            font-size: 17px;
+        }
+
+        .chat-actions {
+            display: flex;
+            gap: 20px;
+        }
+
+        .chat-actions span {
+            font-size: 22px;
+            cursor: pointer;
+            color: #e0e0e0;
+            transition: color 0.2s;
+        }
+
+        .chat-actions span:hover {
+            color: #07c160;
+        }
+
+        /* 消息列表 */
+        .message-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .message {
+            margin-bottom: 8px;
+            display: flex;
+            max-width: 70%;
+            gap: 16px;
+        }
+
+        .message.sent {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .message-content {
+            background: linear-gradient(135deg, #333333 0%, #2a2a2a 100%);
+            padding: 16px 20px;
+            border-radius: 12px;
+            word-wrap: break-word;
+            line-height: 1.6;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border: 1px solid #3a3a3a;
+            position: relative;
+            min-width: 60px;
+            max-width: 100%;
+        }
+
+        .message:not(.sent) .message-content::after {
+            content: '';
+            position: absolute;
+            bottom: 12px;
+            left: -7px;
+            width: 0;
+            height: 0;
+            border-right: 8px solid #333333;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+        }
+
+        .message.sent .message-content::after {
+            content: '';
+            position: absolute;
+            bottom: 12px;
+            right: -7px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid #07c160;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+        }
+
+        .message.sent .message-content {
+            background: linear-gradient(135deg, #07c160 0%, #06ad56 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(7, 193, 96, 0.25);
+            border: 1px solid #06ad56;
+        }
+
+        .message-info {
+            font-size: 12px;
+            color: #888;
+            margin-top: 6px;
+            text-align: right;
+        }
+
+        /* 输入区域 */
+        .input-area {
+            padding: 16px 20px;
+            background: linear-gradient(180deg, #333333 0%, #2a2a2a 100%);
+            border-top: 1px solid #3a3a3a;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .input-actions {
+            display: flex;
+            gap: 16px;
+        }
+
+        .input-actions span {
+            font-size: 26px;
+            cursor: pointer;
+            color: #e0e0e0;
+            transition: all 0.2s;
+            padding: 4px;
+            border-radius: 6px;
+        }
+
+        .input-actions span:hover {
+            color: #07c160;
+            background-color: #3a3a3a;
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 12px 16px;
+            background-color: #1a1a1a;
+            border: none;
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .message-input::placeholder {
+            color: #888;
+        }
+
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #444;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="header-actions">
+                <span>👤</span>
+            </div>
+            <input type="text" class="search-box" placeholder="搜索">
+            <div class="header-actions">
+                <span>⊕</span>
+                <span>⋮</span>
+            </div>
+        </div>
+        <div class="contact-list">
+            <div class="contact-item">
+                <img src="https://picsum.photos/seed/1/100/100" alt="File Transfer" class="contact-avatar">
+                <div class="contact-info">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span class="contact-name">File Transfer</span>
+                        <span class="contact-time">10:44</span>
+                    </div>
+                    <div class="contact-preview">[Photo]</div>
+                </div>
+            </div>
+            <div class="contact-item">
+                <img src="https://picsum.photos/seed/2/100/100" alt="大模型数据标注" class="contact-avatar">
+                <div class="contact-info">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span class="contact-name">大模型数据标注【代...💬</span>
+                        <span class="contact-time">18:40</span>
+                    </div>
+                    <div class="contact-preview">"岁月神，余文几行" recalled a me...</div>
+                </div>
+                <span class="contact-badge">9</span>
+            </div>
+            <div class="contact-item">
+                <img src="https://picsum.photos/seed/3/100/100" alt="老娘" class="contact-avatar">
+                <div class="contact-info">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span class="contact-name">老娘</span>
+                        <span class="contact-time">18:05</span>
+                    </div>
+                    <div class="contact-preview">起来吃饭啊</div>
+                </div>
+            </div>
+            <div class="contact-item active">
+                <img src="https://picsum.photos/seed/4/100/100" alt="Involution Hell" class="contact-avatar">
+                <div class="contact-info">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span class="contact-name">Involution Hell (255)</span>
+                        <span class="contact-time">18:03</span>
+                    </div>
+                    <div class="contact-preview">Dawg: 一起看房可以</div>
+                </div>
+            </div>
+            <div class="contact-item">
+                <img src="https://picsum.photos/seed/5/100/100" alt="兔友会TOYOU" class="contact-avatar">
+                <div class="contact-info">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span class="contact-name">🐰 兔友会TOYOU 🐰</span>
+                        <span class="contact-time">18:01</span>
+                    </div>
+                    <div class="contact-preview">!!!!: 我去，太牛了</div>
+                </div>
+            </div>
+            <div class="contact-item">
+                <img src="https://picsum.photos/seed/6/100/100" alt="Official Accounts" class="contact-avatar">
+                <div class="contact-info">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span class="contact-name">Official Accounts</span>
+                        <span class="contact-time">17:53</span>
+                    </div>
+                    <div class="contact-preview">一数儿: [Link]《化学·高考必刷100...</div>
+                </div>
+            </div>
+            <div class="contact-item">
+                <img src="https://picsum.photos/seed/7/100/100" alt="悉尼好房分享群" class="contact-avatar">
+                <div class="contact-info">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span class="contact-name">🇦🇺 悉尼好房分享群 💬</span>
+                        <span class="contact-time">17:51</span>
+                    </div>
+                    <div class="contact-preview">[20 messages] Ezell | 澳洲租...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-area">
+        <div class="chat-header">
+            <span class="chat-title">Involution Hell (255)</span>
+            <div class="chat-actions">
+                <span>⋮</span>
+            </div>
+        </div>
+        <div class="message-list">
+            <div class="message">
+                <img src="https://picsum.photos/seed/weather/100/100" alt="Weather" class="message-avatar">
+                <div class="message-content">
+                    🌤️ 北京第三区交... https://app.sli.do/event/v...
+                </div>
+            </div>
+            <div class="message">
+                <img src="https://picsum.photos/seed/user1/100/100" alt="User1" class="message-avatar">
+                <div class="message-content">
+                    带着房子找室友比较好找哦
+                </div>
+            </div>
+            <div class="message-info" style="text-align: left; padding-left: 56px;">18:03</div>
+            <div class="message sent">
+                <img src="https://picsum.photos/seed/me/100/100" alt="Me" class="message-avatar">
+                <div class="message-content">
+                    一起看房可以
+                </div>
+            </div>
+        </div>
+        <div class="input-area">
+            <div class="input-actions">
+                <span>😀</span>
+                <span>📁</span>
+                <span>✂️</span>
+                <span>💬</span>
+            </div>
+            <input type="text" class="message-input" placeholder="请输入消息...">
+            <div class="input-actions">
+                <span>📞</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 联系人点击事件
+        const contactItems = document.querySelectorAll('.contact-item');
+        contactItems.forEach(item => {
+            item.addEventListener('click', function() {
+                // 移除所有活动状态
+                contactItems.forEach(i => i.classList.remove('active'));
+                // 设置当前为活动状态
+                this.classList.add('active');
+                // 更新聊天标题
+                const contactName = this.querySelector('.contact-name').textContent;
+                document.querySelector('.chat-title').textContent = contactName;
+            });
+        });
+
+        // 消息输入功能
+        const messageInput = document.querySelector('.message-input');
+        const messageList = document.querySelector('.message-list');
+
+        messageInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && this.value.trim() !== '') {
+                // 创建新消息
+                const newMessage = document.createElement('div');
+                newMessage.className = 'message sent';
+
+                // 处理多行文本
+                const formattedText = this.value.replace(/\n/g, '<br>');
+
+                newMessage.innerHTML = `
+                    <img src="https://picsum.photos/seed/me/100/100" alt="Me" class="message-avatar">
+                    <div class="message-content">${formattedText}</div>
+                `;
+                messageList.appendChild(newMessage);
+                // 滚动到底部
+                messageList.scrollTop = messageList.scrollHeight;
+                // 清空输入
+                this.value = '';
+            }
+        });
+    </script>
+</body>
+</html>

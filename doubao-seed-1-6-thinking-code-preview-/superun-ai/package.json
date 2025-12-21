@@ -1,0 +1,17 @@
+{
+  "name": "superun-ai",
+  "version": "1.0.0",
+  "description": "SuperUn AI - AI Transformation Platform",
+  "scripts": {
+    "dev": "npx serve -l 54609",
+    "build": "mkdir -p build && cp index.html build/ && cp -r src build/ && cp -r public build/ 2>/dev/null || true",
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed"
+  },
+  "keywords": ["ai", "artificial-intelligence", "superun"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.40.0"
+  }
+}
